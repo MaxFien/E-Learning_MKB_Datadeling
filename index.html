@@ -10,23 +10,19 @@
   .screen { display: none; min-height: 100vh; flex-direction: column; }
   .screen.active { display: flex; }
 
-  /* PROGRESS */
   .progress-wrap { background: #e0e0e0; }
   .progress-bar { height: 6px; }
   .progress-fill { background: #1a1a2e; height: 6px; transition: width 0.4s; }
   .progress-label { font-size: 11px; color: #888; padding: 6px 24px; background: #f5f5f5; display: flex; justify-content: space-between; }
   .progress-label .mod-name { font-weight: 600; color: #1a1a2e; }
 
-  /* HEADER */
   .header { background: #1a1a2e; color: white; padding: 16px 24px; display: flex; align-items: center; justify-content: space-between; }
   .header .module-label { font-size: 11px; color: #7070aa; letter-spacing: 1px; }
   .header .module-title { font-size: 15px; font-weight: 500; color: white; margin-top: 2px; }
   .timer { font-size: 12px; color: #c0c0ff; background: rgba(255,255,255,0.1); padding: 4px 10px; border-radius: 20px; }
 
-  /* CONTENT */
   .content { flex: 1; padding: 28px 24px; max-width: 680px; margin: 0 auto; width: 100%; }
 
-  /* CARDS */
   .card { background: white; border-radius: 12px; padding: 24px; margin-bottom: 16px; border-left: 4px solid #1a1a2e; }
   .card.yellow { border-left-color: #ffd166; }
   .card.green { border-left-color: #06d6a0; }
@@ -38,7 +34,8 @@
   .card p { font-size: 14px; color: #444; line-height: 1.7; margin-bottom: 10px; }
   .card p:last-child { margin-bottom: 0; }
 
-  /* SCENARIO */
+  .source { font-size: 10px; color: #aaa; font-style: italic; margin-top: 6px; }
+
   .scenario { background: #f5f5f5; border-radius: 8px; padding: 16px; margin: 12px 0; }
   .scenario .name { font-size: 12px; font-weight: 700; color: #1a1a2e; margin-bottom: 6px; }
   .scenario p { font-size: 13px; color: #333; line-height: 1.7; }
@@ -47,24 +44,28 @@
   .highlight p { color: #e0e0ff; font-size: 13px; line-height: 1.7; }
   .highlight strong { color: #c0c0ff; }
 
-  /* CALCULATOR */
+  .stat-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin: 14px 0; }
+  .stat { background: #f5f5f5; border-radius: 8px; padding: 14px; text-align: center; }
+  .stat .num { font-size: 26px; font-weight: 700; color: #1a1a2e; }
+  .stat .lbl { font-size: 11px; color: #888; margin-top: 3px; line-height: 1.4; }
+
   .calc { background: #f0f4f8; border-radius: 12px; padding: 18px; margin: 14px 0; }
   .calc h3 { font-size: 13px; font-weight: 700; color: #1a1a2e; margin-bottom: 14px; }
   .calc-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; gap: 10px; }
   .calc-row label { font-size: 12px; color: #555; flex: 1; }
   .calc-row input { width: 80px; border: 1.5px solid #ddd; border-radius: 6px; padding: 6px 10px; font-size: 13px; font-family: inherit; text-align: right; }
   .calc-row input:focus { outline: none; border-color: #1a1a2e; }
-  .calc-result { background: #1a1a2e; border-radius: 8px; padding: 12px 16px; margin-top: 8px; display: flex; justify-content: space-between; align-items: center; }
-  .calc-result .lbl { font-size: 12px; color: #a0a0d0; }
-  .calc-result .val { font-size: 20px; font-weight: 700; color: white; }
+  .calc-results { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 8px; }
+  .calc-result { border-radius: 8px; padding: 12px 14px; display: flex; flex-direction: column; gap: 4px; }
+  .calc-result.dark { background: #1a1a2e; }
+  .calc-result.green { background: #edfdf7; }
+  .calc-result .lbl { font-size: 11px; }
+  .calc-result.dark .lbl { color: #a0a0d0; }
+  .calc-result.green .lbl { color: #0a6e56; }
+  .calc-result .val { font-size: 20px; font-weight: 700; }
+  .calc-result.dark .val { color: white; }
+  .calc-result.green .val { color: #003d2e; }
 
-  /* STATS */
-  .stats { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 14px 0; }
-  .stat { background: #f5f5f5; border-radius: 8px; padding: 14px; text-align: center; }
-  .stat .num { font-size: 28px; font-weight: 700; color: #1a1a2e; }
-  .stat .lbl { font-size: 11px; color: #888; margin-top: 3px; }
-
-  /* CHOICES */
   .choices { display: flex; flex-direction: column; gap: 10px; margin: 16px 0; }
   .choice-btn { background: white; border: 1.5px solid #ddd; border-radius: 10px; padding: 14px 18px; font-size: 14px; color: #333; cursor: pointer; text-align: left; transition: all 0.2s; font-family: inherit; }
   .choice-btn:hover { border-color: #1a1a2e; background: #f0f4f8; }
@@ -77,18 +78,15 @@
   .feedback.bad { background: #fff0f3; color: #7a0020; border-left: 3px solid #ef476f; }
   .feedback.info { background: #fffbe0; color: #5c3a00; border-left: 3px solid #ffd166; }
 
-  /* REFLECTION */
   .reflection-input { width: 100%; border: 1.5px solid #ddd; border-radius: 8px; padding: 12px; font-size: 13px; font-family: inherit; resize: vertical; min-height: 80px; margin-top: 8px; }
   .reflection-input:focus { outline: none; border-color: #1a1a2e; }
 
-  /* NAV */
   .nav { padding: 20px 24px; max-width: 680px; margin: 0 auto; width: 100%; display: flex; justify-content: space-between; align-items: center; }
   .btn { background: #1a1a2e; color: white; border: none; border-radius: 8px; padding: 12px 28px; font-size: 14px; cursor: pointer; font-family: inherit; transition: opacity 0.2s; }
   .btn:hover { opacity: 0.85; }
   .btn.secondary { background: white; color: #1a1a2e; border: 1.5px solid #ddd; }
   .btn:disabled { opacity: 0.3; cursor: default; }
 
-  /* INTRO */
   .intro-hero { background: #1a1a2e; color: white; padding: 48px 24px; text-align: center; }
   .intro-hero h1 { font-size: 26px; font-weight: 500; margin-bottom: 8px; }
   .intro-hero p { font-size: 15px; color: #c0c0ff; margin-bottom: 4px; }
@@ -96,18 +94,6 @@
   .intro-meta span { font-size: 12px; color: #7070aa; background: rgba(255,255,255,0.08); padding: 5px 12px; border-radius: 20px; }
   .intro-content { padding: 28px 24px; max-width: 680px; margin: 0 auto; }
 
-  /* LANGUAGE SCREEN */
-  .lang-screen { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; background: #1a1a2e; padding: 40px 24px; text-align: center; }
-  .lang-screen h1 { font-size: 22px; font-weight: 500; color: white; margin-bottom: 8px; }
-  .lang-screen p { font-size: 14px; color: #7070aa; margin-bottom: 32px; }
-  .lang-buttons { display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; }
-  .lang-btn { background: white; border: none; border-radius: 12px; padding: 20px 36px; cursor: pointer; font-family: inherit; transition: transform 0.15s; }
-  .lang-btn:hover { transform: scale(1.04); }
-  .lang-btn .flag { font-size: 32px; display: block; margin-bottom: 8px; }
-  .lang-btn .lang-name { font-size: 14px; font-weight: 700; color: #1a1a2e; }
-  .lang-btn .lang-sub { font-size: 11px; color: #888; margin-top: 2px; }
-
-  /* ANALOGY */
   .analogy { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 14px 0; }
   .analogy-item { background: #f5f5f5; border-radius: 8px; padding: 12px; text-align: center; }
   .analogy-item .icon { font-size: 28px; margin-bottom: 6px; }
@@ -119,7 +105,12 @@
   .step-num { width: 26px; height: 26px; border-radius: 50%; background: #1a1a2e; color: white; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
   .step-list p { font-size: 13px; color: #444; line-height: 1.6; }
 
-  /* FINAL */
+  .process-flow { display: flex; flex-direction: column; gap: 8px; margin: 14px 0; }
+  .process-step { display: flex; gap: 12px; align-items: flex-start; background: #f5f5f5; border-radius: 8px; padding: 12px; }
+  .process-icon { width: 32px; height: 32px; border-radius: 8px; background: #1a1a2e; color: white; font-size: 13px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .process-step p { font-size: 13px; color: #333; line-height: 1.6; }
+  .process-step .step-title { font-size: 11px; font-weight: 700; color: #1a1a2e; margin-bottom: 3px; text-transform: uppercase; letter-spacing: 0.5px; }
+
   .final-hero { background: #06d6a0; padding: 40px 24px; text-align: center; }
   .final-hero h1 { font-size: 24px; font-weight: 500; color: #003d2e; }
   .final-hero p { color: #004d38; margin-top: 6px; }
@@ -157,7 +148,7 @@
 <div class="screen" id="s-intro">
   <div class="intro-hero">
     <h1 data-nl="Datadeling in de logistiek" data-en="Data sharing in logistics"></h1>
-    <p data-nl="Een praktische e-learning voor ondernemers in het transport" data-en="A practical e-learning for transport entrepreneurs"></p>
+    <p data-nl="Een praktische e-learning voor iedereen werkzaam in het transport en logistiek" data-en="A practical e-learning for everyone working in transport and logistics"></p>
     <div class="intro-meta">
       <span data-nl="15–20 minuten" data-en="15–20 minutes"></span>
       <span data-nl="5 modules" data-en="5 modules"></span>
@@ -167,7 +158,8 @@
   <div class="intro-content">
     <div class="card yellow">
       <div class="card-label" data-nl="Waarom deze e-learning?" data-en="Why this e-learning?"></div>
-      <p data-nl="Elke dag rijden er vrachtwagens en containers half leeg over Europese wegen. Niet omdat er geen lading is — maar omdat de juiste informatie niet op het juiste moment beschikbaar is. Deze e-learning laat je zien hoe dat anders kan, en wat jij daarin kunt doen." data-en="Every day, trucks and containers drive half-empty across European roads. Not because there is no cargo — but because the right information is not available at the right time. This e-learning shows you how things can be different, and what you can do about it."></p>
+      <p data-nl="Elke dag rijden er vrachtwagens en containers half leeg over Europese wegen. Niet omdat er geen lading is — maar omdat de juiste informatie niet op het juiste moment beschikbaar is. Volgens Eurostat reed in 2022 ruim 20% van alle vrachtkilometers in de EU leeg — goed voor miljarden euro's aan verlies en tonnen onnodige CO₂-uitstoot." data-en="Every day, trucks and containers drive half-empty across European roads. Not because there is no cargo — but because the right information is not available at the right time. According to Eurostat, over 20% of all freight kilometres in the EU in 2022 were driven empty — accounting for billions of euros in losses and tonnes of unnecessary CO₂ emissions."></p>
+      <p class="source" data-nl="Bron: Eurostat, Road freight transport by journey characteristics (2022); CtrlChain, The Hidden Cost of Empty Trucks (2025)" data-en="Source: Eurostat, Road freight transport by journey characteristics (2022); CtrlChain, The Hidden Cost of Empty Trucks (2025)"></p>
     </div>
     <div class="card green">
       <div class="card-label" data-nl="Na deze e-learning weet je..." data-en="After this e-learning you will know..."></div>
@@ -192,18 +184,24 @@
   </div>
   <div class="content">
     <div class="card yellow">
-      <div class="card-label" data-nl="Maak kennis met Jan" data-en="Meet Jan"></div>
-      <h2 data-nl="Een dag in het leven van transportbedrijf Van der Berg" data-en="A day in the life of transport company Van der Berg"></h2>
+      <div class="card-label" data-nl="Maak kennis met Jan" data-en="Meet Thomas"></div>
+      <h2 data-nl="Een dag in het leven van transportbedrijf Van der Berg" data-en="A day in the life of Mueller Logistics"></h2>
     </div>
     <div class="scenario">
-      <div class="name" data-nl="Transportbedrijf Van der Berg — Tilburg" data-en="Transport company Van der Berg — Tilburg"></div>
-      <p data-nl="Jan van der Berg runt een transportbedrijf met 18 vrachtwagens. Hij vervoert voornamelijk pallets voor productiebedrijven in de regio Brabant. Het bedrijf bestaat al 22 jaar en heeft een vaste klantenkring opgebouwd." data-en="Jan van der Berg runs a transport company with 18 trucks. He mainly transports pallets for manufacturing companies in the Brabant region. The company has been around for 22 years and has built up a loyal customer base."></p>
+      <div class="name" data-nl="Transportbedrijf Van der Berg — Tilburg" data-en="Mueller Logistics — Hamburg"></div>
+      <p data-nl="Jan van der Berg runt een transportbedrijf met 18 vrachtwagens. Hij vervoert voornamelijk pallets voor productiebedrijven in de regio Brabant. Het bedrijf bestaat al 22 jaar en heeft een vaste klantenkring opgebouwd." data-en="Thomas Mueller runs a transport company with 18 trucks. He mainly transports pallets for manufacturing companies in the Hamburg region. The company has been around for 22 years and has built up a loyal customer base."></p>
       <p style="margin-top:8px;" data-nl="Op een dinsdagochtend vertrekt een van zijn chauffeurs richting Rotterdam — met een truck die voor 60% gevuld is. De overige 40% is leeg. Er is simpelweg geen lading beschikbaar voor die ruimte." data-en="On a Tuesday morning, one of his drivers sets off towards Rotterdam — with a truck that is 60% full. The remaining 40% is empty. There is simply no cargo available for that space."></p>
     </div>
-    <div class="thought" data-nl='"Zonde van de brandstof, maar wat kan ik eraan doen? Ik weet niet wat anderen in de buurt nodig hebben."' data-en='"What a waste of fuel, but what can I do about it? I have no idea what other companies nearby need."'></div>
+    <div class="thought" data-nl='"Zonde van de brandstof, maar wat kan ik eraan doen? Ik weet niet wat anderen in de buurt nodig hebben."' data-en='"What a waste of fuel, but what can I do about it? I have no idea what other companies nearby need." — Thomas'></div>
     <div class="card blue">
       <div class="card-label" data-nl="Wist je dat..." data-en="Did you know..."></div>
-      <p data-nl="Gemiddeld rijdt <strong>30% van alle vrachtwagens in Europa leeg</strong>. In Europa gaat het om miljoenen lege kilometers per jaar — met directe kosten voor de ondernemer en onnodige CO₂-uitstoot." data-en="On average, <strong>30% of all trucks in Europe drive empty</strong>. Across Europe, this amounts to millions of empty kilometres per year — with direct costs for entrepreneurs and unnecessary CO₂ emissions."></p>
+      <div class="stat-row">
+        <div class="stat"><div class="num">20%</div><div class="lbl" data-nl="van alle EU vrachtkilometers rijdt leeg" data-en="of all EU freight km driven empty"></div></div>
+        <div class="stat"><div class="num">34 mrd</div><div class="lbl" data-nl="lege kilometers in de EU in 2021" data-en="empty km in the EU in 2021"></div></div>
+        <div class="stat"><div class="num">€mrd</div><div class="lbl" data-nl="jaarlijks verlies voor Europese transporteurs" data-en="annual loss for European carriers"></div></div>
+      </div>
+      <p data-nl="Wegvervoer is verantwoordelijk voor 73% van alle transport-CO₂ uitstoot in de EU. Elke lege kilometer draagt onnodig bij aan klimaatverandering — zonder enige economische tegenprestatie." data-en="Road transport accounts for 73% of all transport CO₂ emissions in the EU. Every empty kilometre contributes unnecessarily to climate change — with zero economic benefit."></p>
+      <p class="source" data-nl="Bron: Eurostat (2022); CNBC, Delivery trucks driving billions of miles empty (2022); EEA, GHG emissions from transport (2023)" data-en="Source: Eurostat (2022); CNBC, Delivery trucks driving billions of miles empty (2022); EEA, GHG emissions from transport (2023)"></p>
     </div>
   </div>
   <div class="nav">
@@ -225,30 +223,41 @@
     <div class="card red">
       <div class="card-label" data-nl="Het probleem" data-en="The problem"></div>
       <h2 data-nl="Bereken zelf wat lege ritten jou kosten" data-en="Calculate what empty trips cost you"></h2>
-      <p data-nl="Vul jouw eigen cijfers in om te zien wat lege ritten jou kosten." data-en="Fill in your own numbers to see what empty trips cost you."></p>
+      <p data-nl="Vul jouw eigen cijfers in. Gemiddeld rijdt 20% van alle vrachtkilometers in Europa leeg — wat betekent dat voor jouw bedrijf?" data-en="Fill in your own numbers. On average, 20% of all freight kilometres in Europe are driven empty — what does that mean for your business?"></p>
     </div>
     <div class="calc">
       <h3 data-nl="Jouw kostencalculator" data-en="Your cost calculator"></h3>
       <div class="calc-row">
-        <label data-nl="Lege ritten per week" data-en="Empty trips per week"></label>
-        <input type="number" id="calc-ritten" value="3" min="0" oninput="updateCalc()">
+        <label data-nl="Totaal ritten per week" data-en="Total trips per week"></label>
+        <input type="number" id="calc-ritten" value="15" min="1" oninput="updateCalc()">
       </div>
       <div class="calc-row">
         <label data-nl="Gemiddelde ritafstand (km)" data-en="Average trip distance (km)"></label>
-        <input type="number" id="calc-km" value="150" min="0" oninput="updateCalc()">
+        <input type="number" id="calc-km" value="200" min="1" oninput="updateCalc()">
       </div>
       <div class="calc-row">
         <label data-nl="Kosten per lege km (€)" data-en="Cost per empty km (€)"></label>
-        <input type="number" id="calc-kosten" value="1.80" min="0" step="0.1" oninput="updateCalc()">
+        <input type="number" id="calc-kosten" value="1.80" min="0.1" step="0.1" oninput="updateCalc()">
       </div>
-      <div class="calc-result">
-        <div class="lbl" data-nl="Geschat verlies per jaar" data-en="Estimated loss per year"></div>
-        <div class="val" id="calc-output">€42.120</div>
+      <div class="calc-row">
+        <label data-nl="CO₂ per km vrachtwagen (kg)" data-en="CO₂ per km truck (kg)"></label>
+        <input type="number" id="calc-co2" value="0.9" min="0.1" step="0.1" oninput="updateCalc()">
       </div>
+      <div class="calc-results">
+        <div class="calc-result dark">
+          <div class="lbl" data-nl="Geschat financieel verlies per jaar (20% leeg)" data-en="Estimated financial loss per year (20% empty)"></div>
+          <div class="val" id="calc-output-eur">€0</div>
+        </div>
+        <div class="calc-result green">
+          <div class="lbl" data-nl="Onnodige CO₂-uitstoot per jaar (kg)" data-en="Unnecessary CO₂ emissions per year (kg)"></div>
+          <div class="val" id="calc-output-co2">0 kg</div>
+        </div>
+      </div>
+      <p class="source" style="margin-top:8px;" data-nl="Bron: gemiddeld 20% lege km (Eurostat, 2022); CO₂ schatting op basis van EEA rapportage zware voertuigen" data-en="Source: average 20% empty km (Eurostat, 2022); CO₂ estimate based on EEA heavy-duty vehicle reporting"></p>
     </div>
     <div class="card orange">
       <div class="card-label" data-nl="De kern van het probleem" data-en="The core problem"></div>
-      <p data-nl="Jan heeft geen informatie over wat andere bedrijven in zijn regio nodig hebben. En die andere bedrijven weten niet dat Jan ruimte over heeft. De informatie bestaat — maar komt niet samen." data-en="Jan has no information about what other companies in his region need. And those other companies don't know that Jan has spare capacity. The information exists — but never meets."></p>
+      <p data-nl="Jan heeft geen informatie over wat andere bedrijven in zijn regio nodig hebben. En die andere bedrijven weten niet dat Jan ruimte over heeft. De informatie bestaat — maar komt niet samen." data-en="Thomas has no information about what other companies in his region need. And those other companies don't know that Thomas has spare capacity. The information exists — but never meets."></p>
     </div>
   </div>
   <div class="nav">
@@ -268,8 +277,7 @@
   <div class="content">
     <div class="card yellow">
       <div class="card-label" data-nl="Even nadenken" data-en="Stop and think"></div>
-      <h2 data-nl="Herken jij dit bij jouw bedrijf?" data-en="Do you recognise this in your own business?"></h2>
-      <p data-nl="Jan rijdt regelmatig met lege ruimte. Hoe zit dat bij jou?" data-en="Jan regularly drives with empty space. How about you?"></p>
+      <h2 data-nl="Herken jij dit bij jouw bedrijf of organisatie?" data-en="Do you recognise this in your own company or organisation?"></h2>
     </div>
     <div class="choices" id="choices-m1"></div>
     <div class="feedback info" id="fb-m1"></div>
@@ -293,24 +301,21 @@
   <div class="content">
     <div class="card blue">
       <div class="card-label" data-nl="Uitleg zonder jargon" data-en="Plain language explanation"></div>
-      <h2 data-nl="Datadeling — wat betekent dat eigenlijk?" data-en="Data sharing — what does it actually mean?"></h2>
-      <p data-nl='De term "federatieve datadeling" klinkt technisch, maar het idee is simpel. Stel je voor dat Jan weet dat hij morgen lege ruimte heeft. En dat een ander bedrijf 15 km verderop weet dat ze iets vervoerd willen hebben.' data-en='The term "federated data sharing" sounds technical, but the idea is simple. Imagine Jan knows he has empty space tomorrow. And that another company 15 km away knows they need something transported.'></p>
-      <p data-nl="Datadeling betekent: die twee stukjes informatie komen samen — <strong>zonder dat Jan zijn volledige planning hoeft te delen</strong> en zonder dat het andere bedrijf weet wie Jan is totdat ze besluiten samen te werken." data-en="Data sharing means: those two pieces of information come together — <strong>without Jan having to share his full schedule</strong> and without the other company knowing who Jan is until they decide to work together."></p>
+      <h2 data-nl="Wat deel je precies?" data-en="What exactly do you share?"></h2>
+      <p data-nl="Bij federatieve datadeling deel je geen volledige bedrijfsdata. Je deelt een beperkt, vooraf afgesproken signaal. Voor een transporteur zoals Jan betekent dat concreet:" data-en="With federated data sharing, you do not share full business data. You share a limited, pre-agreed signal. For a transporter like Thomas, this means in practice:"></p>
     </div>
-    <div class="analogy">
-      <div class="analogy-item">
-        <div class="icon">📱</div>
-        <div class="title" data-nl="Zoals een groepschat" data-en="Like a group chat"></div>
-        <p data-nl="Je deelt wat je wilt delen. Niemand ziet je andere gesprekken." data-en="You share what you want. Nobody sees your other conversations."></p>
+    <div style="display:flex; flex-direction:column; gap:8px; margin: 12px 0;">
+      <div style="background:#eef8fd; border-radius:8px; padding:12px 16px; border-left:3px solid #118ab2;">
+        <div style="font-size:11px; font-weight:700; color:#0c447c; margin-bottom:4px;" data-nl="WAT JE WEL DEELT" data-en="WHAT YOU DO SHARE"></div>
+        <ul style="font-size:13px; color:#333; line-height:2; padding-left:16px;" id="share-yes-list"></ul>
       </div>
-      <div class="analogy-item">
-        <div class="icon">🔒</div>
-        <div class="title" data-nl="Maar veiliger" data-en="But safer"></div>
-        <p data-nl="Jij bepaalt wat zichtbaar is. Je concurrenten zien je tarieven niet." data-en="You decide what is visible. Competitors cannot see your rates."></p>
+      <div style="background:#fff0f3; border-radius:8px; padding:12px 16px; border-left:3px solid #ef476f;">
+        <div style="font-size:11px; font-weight:700; color:#7a0020; margin-bottom:4px;" data-nl="WAT JE NIET DEELT" data-en="WHAT YOU DO NOT SHARE"></div>
+        <ul style="font-size:13px; color:#333; line-height:2; padding-left:16px;" id="share-no-list"></ul>
       </div>
     </div>
     <div class="highlight">
-      <p><strong data-nl="De kern:" data-en="The key point:"></strong> <span data-nl="Je deelt geen gevoelige bedrijfsdata. Je deelt alleen een signaal — beschikbare ruimte op route X op datum Y." data-en="You don't share sensitive business data. You only share a signal — available space on route X on date Y."></span></p>
+      <p><strong data-nl="De kern:" data-en="The key point:"></strong> <span data-nl="Jij bepaalt exact wat zichtbaar is. Het systeem heeft alleen de bovenste lijst nodig om een match te maken." data-en="You decide exactly what is visible. The system only needs the items above to make a match."></span></p>
     </div>
   </div>
   <div class="nav">
@@ -321,26 +326,67 @@
 
 <div class="screen" id="s-m2-2">
   <div class="progress-wrap">
-    <div class="progress-bar"><div class="progress-fill" style="width:40%"></div></div>
-    <div class="progress-label"><span data-nl="Module 2 van 5" data-en="Module 2 of 5"></span><span class="mod-name" data-nl="Wat is federatieve datadeling?" data-en="What is federated data sharing?"></span></div>
+    <div class="progress-bar"><div class="progress-fill" style="width:38%"></div></div>
+    <div class="progress-label"><span data-nl="Module 2 van 5" data-en="Module 2 of 5"></span><span class="mod-name" data-nl="Platformontwikkeling & wetgeving" data-en="Platform development & legislation"></span></div>
   </div>
   <div class="header">
-    <div><div class="module-label" data-nl="MODULE 2 VAN 5" data-en="MODULE 2 OF 5"></div><div class="module-title" data-nl="Wat is federatieve datadeling?" data-en="What is federated data sharing?"></div></div>
+    <div><div class="module-label" data-nl="MODULE 2 VAN 5" data-en="MODULE 2 OF 5"></div><div class="module-title" data-nl="Platformontwikkeling & wetgeving" data-en="Platform development & legislation"></div></div>
     <div class="timer">~4 min</div>
   </div>
   <div class="content">
-    <div class="card green">
-      <div class="card-label" data-nl="Hoe werkt het voor Jan?" data-en="How does it work for Jan?"></div>
-      <h2 data-nl="Stap voor stap: wat ziet Jan, wat zien anderen?" data-en="Step by step: what does Jan see, what do others see?"></h2>
+    <div class="card blue">
+      <div class="card-label" data-nl="Waar staan we nu?" data-en="Where are we now?"></div>
+      <h2 data-nl="Platforms zijn er — maar nog niet volwassen" data-en="Platforms exist — but are not yet mature"></h2>
+      <p data-nl="Er zijn inmiddels meerdere initiatieven die federatieve datadeling in de logistiek mogelijk willen maken. Denk aan Gaia-X, het FEDeRATED-project en nationale data spaces. Ze bouwen aan de technische infrastructuur — maar de adoptie loopt nog achter, zeker bij MKB." data-en="Several initiatives now aim to enable federated data sharing in logistics. Think of Gaia-X, the FEDeRATED project and national data spaces. They are building the technical infrastructure — but adoption is still lagging, especially among SMEs."></p>
+      <p class="source" data-nl="Bron: Open Logistics Foundation (2025); FEDeRATED project, Europese Commissie" data-en="Source: Open Logistics Foundation (2025); FEDeRATED project, European Commission"></p>
     </div>
-    <ul class="step-list" id="steps-m2"></ul>
     <div class="card yellow">
-      <div class="card-label" data-nl="Wat Jan NIET deelt" data-en="What Jan does NOT share"></div>
-      <p data-nl="Zijn prijzen, zijn klantrelaties, zijn volledige planning, zijn marges. Alleen: beschikbare ruimte op een route en datum. Meer heeft het systeem niet nodig." data-en="His prices, customer relationships, full schedule, margins. Only: available space on a route and date. That is all the system needs."></p>
+      <div class="card-label" data-nl="Wat regelt de EU?" data-en="What does the EU regulate?"></div>
+      <p data-nl="De EU zet actief in op datadeling via twee belangrijke wetten:" data-en="The EU is actively promoting data sharing through two key laws:"></p>
+      <div style="display:flex; flex-direction:column; gap:8px; margin-top:10px;">
+        <div style="background:#fffbe0; border-radius:8px; padding:12px 14px; border-left:3px solid #ffd166;">
+          <div style="font-size:11px; font-weight:700; color:#7a4f00; margin-bottom:4px;">EU Data Act (van kracht: sept. 2025)</div>
+          <p style="font-size:12px; color:#555; line-height:1.6;" data-nl="Verplicht fabrikanten en platforms om data toegankelijk te maken via open interfaces. Geeft gebruikers het recht op toegang tot hun eigen data." data-en="Requires manufacturers and platforms to make data accessible via open interfaces. Gives users the right to access their own data."></p>
+        </div>
+        <div style="background:#eef8fd; border-radius:8px; padding:12px 14px; border-left:3px solid #118ab2;">
+          <div style="font-size:11px; font-weight:700; color:#0c447c; margin-bottom:4px;">Data Governance Act</div>
+          <p style="font-size:12px; color:#555; line-height:1.6;" data-nl="Regelt hoe data gedeeld mag worden tussen organisaties en sectoren, met aandacht voor vertrouwen en neutraliteit van tussenpersonen." data-en="Regulates how data may be shared between organisations and sectors, with attention to trust and neutrality of intermediaries."></p>
+        </div>
+      </div>
+      <p class="source" style="margin-top:8px;" data-nl="Bron: Europese Commissie, EU Data Act (2024); Data Governance Act (2022)" data-en="Source: European Commission, EU Data Act (2024); Data Governance Act (2022)"></p>
+    </div>
+    <div class="highlight">
+      <p data-nl="<strong>De richting is duidelijk:</strong> de EU verwacht dat datadeling de norm wordt. Bedrijven die zich nu oriënteren, staan straks sterker dan bedrijven die wachten tot het verplicht is." data-en="<strong>The direction is clear:</strong> the EU expects data sharing to become the norm. Companies that orientate themselves now will be better positioned than those who wait until it becomes mandatory."></p>
     </div>
   </div>
   <div class="nav">
     <button class="btn secondary" onclick="goTo('s-m2-1')" data-nl="Terug" data-en="Back"></button>
+    <button class="btn" onclick="goTo('s-m2-3')" data-nl="Verder" data-en="Next"></button>
+  </div>
+</div>
+
+<div class="screen" id="s-m2-3">
+  <div class="progress-wrap">
+    <div class="progress-bar"><div class="progress-fill" style="width:44%"></div></div>
+    <div class="progress-label"><span data-nl="Module 2 van 5" data-en="Module 2 of 5"></span><span class="mod-name" data-nl="Het proces na een match" data-en="The process after a match"></span></div>
+  </div>
+  <div class="header">
+    <div><div class="module-label" data-nl="MODULE 2 VAN 5" data-en="MODULE 2 OF 5"></div><div class="module-title" data-nl="Het proces na een match" data-en="The process after a match"></div></div>
+    <div class="timer">~3 min</div>
+  </div>
+  <div class="content">
+    <div class="card green">
+      <div class="card-label" data-nl="Stap voor stap" data-en="Step by step"></div>
+      <h2 data-nl="Wat gebeurt er nadat het systeem een match vindt?" data-en="What happens after the system finds a match?"></h2>
+    </div>
+    <div class="process-flow" id="process-flow"></div>
+    <div class="card orange">
+      <div class="card-label" data-nl="Praktische uitdagingen" data-en="Practical challenges"></div>
+      <p data-nl="Een match is het begin, niet het einde. Er zijn praktische zaken om rekening mee te houden: laad- en losvolgorde, rijdentijden van de chauffeur, type lading (bijv. koelvervoer of gevaarlijke stoffen) en contractuele afspraken. Datadeling lost dit niet automatisch op — maar het brengt de partijen samen die het anders kunnen oplossen." data-en="A match is the start, not the end. There are practical considerations: loading and unloading sequences, driver hours, type of cargo (e.g. refrigerated or hazardous goods), and contractual terms. Data sharing does not automatically resolve this — but it brings together the parties who can work it out."></p>
+    </div>
+  </div>
+  <div class="nav">
+    <button class="btn secondary" onclick="goTo('s-m2-2')" data-nl="Terug" data-en="Back"></button>
     <button class="btn" onclick="goTo('s-m2-q')" data-nl="Verder" data-en="Next"></button>
   </div>
 </div>
@@ -362,7 +408,7 @@
     <div class="feedback" id="fb-m2"></div>
   </div>
   <div class="nav">
-    <button class="btn secondary" onclick="goTo('s-m2-2')" data-nl="Terug" data-en="Back"></button>
+    <button class="btn secondary" onclick="goTo('s-m2-3')" data-nl="Terug" data-en="Back"></button>
     <button class="btn" id="btn-m2-next" disabled onclick="goTo('s-m3-1')" data-nl="Verder" data-en="Next"></button>
   </div>
 </div>
@@ -380,17 +426,17 @@
   <div class="content">
     <div class="card red">
       <div class="card-label" data-nl="De barrières" data-en="The barriers"></div>
-      <h2 data-nl="Jan twijfelt. En hij is niet de enige." data-en="Jan hesitates. And he is not alone."></h2>
+      <h2 data-nl="Jan twijfelt. En hij is niet de enige." data-en="Thomas hesitates. And he is not alone."></h2>
     </div>
     <div class="thought" data-nl='"Wat als een concurrent mijn informatie gebruikt? Wat als het te duur is? Wat als ik het technisch niet begrijp?"' data-en='"What if a competitor uses my information? What if it is too expensive? What if I don\'t understand the technology?"'></div>
-    <p style="font-size:14px; color:#444; line-height:1.7; margin:12px 0;" data-nl="Uit onderzoek onder MKB-bedrijven in de logistiek blijkt dat de grootste barrières zijn:" data-en="Research among SMEs in logistics shows that the biggest barriers are:"></p>
+    <p style="font-size:14px; color:#444; line-height:1.7; margin:12px 0;" data-nl="Uit onderzoek onder 18 MKB-bedrijven in de logistiek blijkt dat de grootste barrières zijn:" data-en="Research among 18 SMEs in logistics shows that the biggest barriers are:"></p>
     <div class="card orange">
       <div class="card-label" data-nl="Barrière 1 — Kennisgebrek" data-en="Barrier 1 — Lack of knowledge"></div>
       <p data-nl="100% van de 18 ondervraagde bedrijven is niet of nauwelijks bekend met het begrip federatieve datadeling — 56% heeft er nog nooit van gehoord, 44% heeft er wel eens van gehoord maar kent de details niet." data-en="100% of the 18 surveyed companies are unfamiliar with the concept of federated data sharing — 56% have never heard of it, 44% have heard of it but don't know the details."></p>
     </div>
     <div class="card yellow">
       <div class="card-label" data-nl="Barrière 2 — Angst voor misbruik" data-en="Barrier 2 — Fear of misuse"></div>
-      <p data-nl="Veel ondernemers zijn bang dat concurrenten hun informatie kunnen inzien. Die angst is begrijpelijk — maar bij federatieve datadeling is die angst grotendeels onterecht." data-en="Many entrepreneurs fear that competitors can view their information. That fear is understandable — but with federated data sharing, it is largely unfounded."></p>
+      <p data-nl="Veel ondernemers en medewerkers zijn bang dat concurrenten hun informatie kunnen inzien. Die angst is begrijpelijk — maar bij federatieve datadeling is die angst grotendeels onterecht. Jij bepaalt wat je deelt." data-en="Many entrepreneurs and employees fear that competitors can view their information. That fear is understandable — but with federated data sharing, it is largely unfounded. You decide what you share."></p>
     </div>
     <div class="card blue">
       <div class="card-label" data-nl="Barrière 3 — Kosten nooit onderzocht" data-en="Barrier 3 — Costs never investigated"></div>
@@ -438,20 +484,21 @@
   </div>
   <div class="content">
     <div class="card green">
-      <div class="card-label" data-nl="Terug naar Jan" data-en="Back to Jan"></div>
-      <h2 data-nl="Wat deed Jan uiteindelijk?" data-en="What did Jan eventually do?"></h2>
+      <div class="card-label" data-nl="Terug naar Jan" data-en="Back to Thomas"></div>
+      <h2 data-nl="Wat deed Jan uiteindelijk?" data-en="What did Thomas eventually do?"></h2>
     </div>
     <div class="scenario">
-      <div class="name" data-nl="Zes maanden later — Transportbedrijf Van der Berg" data-en="Six months later — Transport company Van der Berg"></div>
-      <p data-nl="Jan sloot zich aan bij een regionaal platform voor transporteurs in Brabant. Elke ochtend geeft hij via een eenvoudige app door welke routes hij die dag rijdt en hoeveel ruimte hij over heeft." data-en="Jan joined a regional platform for transporters in Brabant. Every morning he uses a simple app to share which routes he is driving that day and how much space he has available."></p>
-      <p style="margin-top:8px;" data-nl="Sindsdien vult hij gemiddeld 2 extra ritten per week bij — ritten die hij anders leeg had gereden. Zijn tarieven en klantgegevens heeft niemand ingezien." data-en="Since then he fills on average 2 extra trips per week — trips he would otherwise have driven empty. Nobody has seen his rates or customer data."></p>
+      <div class="name" data-nl="Zes maanden later — Transportbedrijf Van der Berg" data-en="Six months later — Mueller Logistics, Hamburg"></div>
+      <p data-nl="Jan sloot zich aan bij een regionaal platform voor transporteurs in Brabant. Elke ochtend geeft hij via een eenvoudige app zijn beschikbare laadmeters, route en datum door." data-en="Thomas joined a regional platform for transporters in the Hamburg area. Every morning he uses a simple app to share his available loading metres, route and date."></p>
+      <p style="margin-top:8px;" data-nl="Sindsdien vult hij gemiddeld 2 extra ritten per week bij. Zijn tarieven en klantgegevens heeft niemand ingezien." data-en="Since then he fills on average 2 extra trips per week. Nobody has seen his rates or customer data."></p>
     </div>
-    <div class="stats">
+    <div class="stat-row">
       <div class="stat"><div class="num">+2</div><div class="lbl" data-nl="extra ritten per week" data-en="extra trips per week"></div></div>
       <div class="stat"><div class="num">€14K</div><div class="lbl" data-nl="extra omzet per jaar" data-en="extra revenue per year"></div></div>
+      <div class="stat"><div class="num">-18T</div><div class="lbl" data-nl="minder CO₂ per jaar (kg)" data-en="less CO₂ per year (kg)"></div></div>
     </div>
     <div class="highlight">
-      <p><strong data-nl="De eerste stap was het moeilijkst." data-en="The first step was the hardest."></strong> <span data-nl="Niet technisch — maar mentaal. Zodra Jan begreep wat hij wel en niet deelde, verdween de twijfel." data-en="Not technically — but mentally. Once Jan understood what he was and wasn't sharing, the doubt disappeared."></span></p>
+      <p><strong data-nl="De eerste stap was het moeilijkst." data-en="The first step was the hardest."></strong> <span data-nl="Niet technisch — maar mentaal. Zodra Thomas begreep wat hij wel en niet deelde, verdween de twijfel." data-en="Not technically — but mentally. Once Thomas understood what he was and wasn't sharing, the doubt disappeared."></span></p>
     </div>
   </div>
   <div class="nav">
@@ -501,7 +548,7 @@
   <div class="content">
     <div class="card blue">
       <div class="card-label" data-nl="Vraag 1 van 3" data-en="Question 1 of 3"></div>
-      <h2 data-nl="Wat is het grootste voordeel van federatieve datadeling voor een transporteur?" data-en="What is the biggest benefit of federated data sharing for a transporter?"></h2>
+      <h2 data-nl="Wat deel je bij federatieve datadeling?" data-en="What do you share in federated data sharing?"></h2>
     </div>
     <div class="choices" id="choices-m5a"></div>
     <div class="feedback" id="fb-m5a"></div>
@@ -523,7 +570,7 @@
   <div class="content">
     <div class="card blue">
       <div class="card-label" data-nl="Vraag 2 van 3" data-en="Question 2 of 3"></div>
-      <h2 data-nl="Welke informatie deel je bij federatieve datadeling?" data-en="What information do you share in federated data sharing?"></h2>
+      <h2 data-nl="Welk percentage EU-vrachtkilometers wordt leeg gereden?" data-en="What percentage of EU freight kilometres are driven empty?"></h2>
     </div>
     <div class="choices" id="choices-m5b"></div>
     <div class="feedback" id="fb-m5b"></div>
@@ -574,14 +621,11 @@
     </div>
     <div class="card blue">
       <div class="card-label" data-nl="Jouw volgende stap" data-en="Your next step"></div>
-      <p data-nl="Neem contact op met <strong>TLN</strong> of <strong>evofenedex</strong> voor meer informatie over datadeling voor transporteurs in jouw regio." data-en="Contact <strong>TLN</strong> or <strong>evofenedex</strong> for more information about data sharing for transporters in your region."></p>
+      <p data-nl="Neem contact op met <strong>TLN</strong> of <strong>evofenedex</strong> voor meer informatie over datadeling voor transporteurs in jouw regio. Of bespreek het met een collega — want de eerste stap begint met het gesprek." data-en="Contact <strong>TLN</strong> or <strong>evofenedex</strong> for more information about data sharing for transporters in your region. Or discuss it with a colleague — because the first step starts with the conversation."></p>
     </div>
-    <div class="card orange">
-      <div class="card-label" data-nl="Eerlijk gezegd..." data-en="To be honest..."></div>
-      <h2 style="font-size:15px; margin-bottom:8px;" data-nl="De technologie is er nog niet helemaal" data-en="The technology isn't quite there yet"></h2>
-      <p data-nl="Veel van de platforms die federatieve datadeling mogelijk moeten maken, zijn nog volop in ontwikkeling. Het ideaal is nog geen realiteit." data-en="Many of the platforms that should enable federated data sharing are still under development. The ideal is not yet a reality."></p>
-      <p data-nl="Maar dat betekent niet dat jij achterover kunt leunen. Juist nu is het moment om je te verdiepen, het gesprek aan te gaan met collega-ondernemers en als vroege gebruiker mee te denken over hoe platforms zich moeten ontwikkelen." data-en="But that doesn't mean you can sit back. Now is exactly the time to learn more, start conversations with fellow entrepreneurs, and as an early adopter help shape how these platforms develop."></p>
-      <p data-nl="De bedrijven die straks het meest profiteren zijn degenen die <strong>nu</strong> al begrijpen waar het over gaat — en het bespreekbaar maken in hun netwerk." data-en="The companies that will benefit most are those who <strong>now</strong> already understand what it is about — and make it a topic of conversation in their network."></p>
+    <div class="card yellow">
+      <div class="card-label" data-nl="Onthoud dit" data-en="Remember this"></div>
+      <p data-nl="De platforms zijn er nog niet volledig. De wetgeving komt eraan. Maar de bedrijven en mensen die straks het meest profiteren zijn degenen die <strong>nu</strong> al begrijpen waar het over gaat — en het bespreekbaar maken in hun netwerk." data-en="The platforms are not yet fully there. The legislation is on its way. But the companies and people who will benefit most are those who <strong>now</strong> already understand what it is about — and make it a topic of conversation in their network."></p>
     </div>
   </div>
   <div class="nav">
@@ -596,34 +640,48 @@ const answered = {};
 
 const t = {
   nl: {
-    introList: ['Wat datadeling concreet betekent voor jouw bedrijf','Waarom het veiliger is dan je denkt','Welke eerste stap jij morgen kunt zetten'],
-    finalList: ['Lege ritten kosten geld — en zijn grotendeels te vermijden','Federatieve datadeling betekent: slim signalen delen, geen gevoelige data','Angst voor misbruik is begrijpelijk maar grotendeels onterecht','De eerste stap is laagdrempelig — begin met oriënteren'],
-    stepsM2: ['Jan geeft aan zijn systeem door: "Ik heb morgen 40% ruimte vrij op de route Tilburg–Rotterdam."','Het systeem matcht dit anoniem met andere bedrijven die lading zoeken op dezelfde route.','Jan krijgt een melding: "Er is mogelijk een match — wil je meer weten?" Dan pas wordt contact gelegd.','Jan beslist zelf of hij de samenwerking aangaat. Zijn tarieven en klantgegevens blijven verborgen.'],
-    stepsM4: ['<strong>Inventariseer:</strong> Hoeveel ritten per week rijd jij met lege ruimte? Maak het concreet.','<strong>Oriënteer:</strong> Zoek op wat TLN of evofenedex aanbiedt op het gebied van datadeling.','<strong>Vraag:</strong> Spreek eens met een collega-ondernemer in jouw regio.','<strong>Pilot:</strong> Veel platforms bieden een gratis proefperiode. Probeer het zonder verplichtingen.'],
+    introList: ['Wat datadeling concreet betekent voor jouw bedrijf of organisatie','Waarom het veiliger is dan je denkt','Welke eerste stap jij morgen kunt zetten'],
+    finalList: ['Lege ritten kosten geld en CO₂ — en zijn grotendeels te vermijden','Federatieve datadeling: route, datum, laadmeters en type lading delen — geen tarieven of klantdata','Angst voor misbruik is begrijpelijk maar grotendeels onterecht','Een match is een startpunt: je onderhandelt zelf en verwerkt het in je planning'],
+    shareYes: ['Beschikbare laadmeters','Route (van A naar B)','Datum en tijdvenster','Type lading (bijv. droog, koel, gevaarlijk)'],
+    shareNo: ['Jouw tarieven','Klantgegevens','Volledige planning','Marges en winstcijfers'],
+    processFlow: [
+      ['1', 'Signaal delen', 'Jan geeft in de app door: "3 laadmeter beschikbaar, Tilburg–Rotterdam, dinsdag 08:00–12:00, droge lading."'],
+      ['2', 'Anonieme matching', 'Het systeem vindt anoniem een partij die lading zoekt op diezelfde route. Geen namen, geen tarieven zichtbaar.'],
+      ['3', 'Melding & beslissing', 'Jan ontvangt een melding. Hij beslist zelf of hij contact wil. Pas dan worden namen uitgewisseld.'],
+      ['4', 'Onderhandeling', 'Jan en de andere partij spreken prijs en voorwaarden af. Laad- en losvolgorde, rijdentijden en type lading worden besproken.'],
+      ['5', 'Verwerking in planning', 'Jan neemt de lading mee en verwerkt het in zijn eigen planningssysteem. De rit die anders leeg was, is nu rendabel.'],
+    ],
+    stepsM4: ['<strong>Inventariseer:</strong> Hoeveel ritten per week rijd jij of jouw bedrijf met lege ruimte? Maak het concreet.','<strong>Oriënteer:</strong> Zoek op wat TLN of evofenedex aanbiedt op het gebied van datadeling.','<strong>Vraag:</strong> Bespreek het met collega\'s of een ondernemer in jouw regio.','<strong>Pilot:</strong> Veel platforms bieden een gratis proefperiode. Probeer het zonder verplichtingen.'],
     reflectionPlaceholder: 'Typ hier je gedachten...',
-    calcLabel: 'Geschat verlies per jaar',
-    choicesM1: ['Ja, dit herken ik goed — het gebeurt regelmatig','Soms, maar ik los het op via mijn netwerk','Niet echt — wij rijden altijd vol'],
+    choicesM1: ['Ja, dit herken ik goed — het gebeurt regelmatig','Soms, maar we lossen het op via ons netwerk','Niet echt — wij rijden altijd vol'],
     fbM1: 'Geen enkel antwoord is fout hier. In de volgende modules leer je hoe datadeling precies dit probleem aanpakt.',
-    choicesM2: [['Je tarieven, klantgegevens en volledige planning', false, 'Je tarieven en klantgegevens zijn juist wat je NIET deelt.'],['Alleen een anoniem signaal: beschikbare ruimte op een route en datum', true, 'Precies! Alleen een signaal. Jouw gevoelige bedrijfsinformatie blijft verborgen.'],['Een financiële vergoeding aan andere partijen', false, 'Je financiële gegevens blijven volledig verborgen.']],
-    choicesM3: [['Eens — concurrenten kunnen mijn tarieven zien', false, 'Dit is een veelgehoorde angst, maar bij federatieve datadeling is dit niet het geval.'],['Oneens — ik bepaal zelf wat ik deel', true, 'Correct! Tarieven en klantgegevens blijven volledig verborgen. Jij bepaalt wat zichtbaar is.']],
-    choicesM5a: [['Je tarieven worden automatisch vergeleken met concurrenten', false, 'Je tarieven blijven juist verborgen.'],['Je kunt lege ritten verminderen zonder gevoelige data te delen', true, 'Precies! Je kunt lege ritten verminderen door slim informatie te delen.'],['Je hoeft geen klantcontact meer te onderhouden', false, 'Datadeling vervangt geen klantcontact.']],
-    choicesM5b: [['Je volledige klantenlijst en tarieven', false, 'Klantgegevens deel je juist niet.'],['Alleen een anoniem signaal: beschikbare ruimte op een route', true, 'Correct! Alleen een anoniem signaal.'],['Je winst- en verliesrekening', false, 'Je financiële gegevens blijven volledig verborgen.']],
-    choicesM5c: [['Direct een duur IT-systeem aanschaffen', false, 'Een duur IT-systeem is niet nodig om te beginnen.'],['Wachten tot de overheid het verplicht stelt', false, 'Je kunt vandaag al beginnen met oriënteren.'],['Inventariseer je lege ritten en oriënteer je op beschikbare platforms', true, 'Precies! Begin klein: inventariseer en oriënteer je.']],
+    choicesM2: [['Route, datum, laadmeters en type lading', true, 'Precies! Dit zijn de minimale gegevens die nodig zijn voor een match. Meer deel je niet.'],['Je volledige planning inclusief klantgegevens', false, 'Klantgegevens deel je juist niet. Alleen de logistieke signalen die nodig zijn voor een match.'],['Je tarieven zodat het systeem de goedkoopste optie kan vinden', false, 'Tarieven blijven volledig verborgen. Je onderhandelt zelf nadat een match is gevonden.']],
+    choicesM3: [['Eens — concurrenten kunnen mijn tarieven zien', false, 'Dit is een veelgehoorde angst, maar bij federatieve datadeling is dit niet het geval. Tarieven deel je niet.'],['Oneens — ik bepaal zelf wat ik deel', true, 'Correct! Je deelt alleen logistieke signalen. Tarieven en klantgegevens blijven volledig verborgen.']],
+    choicesM5a: [['Route, datum, beschikbare laadmeters en type lading', true, 'Precies! Dit zijn de vier elementen die je deelt. Meer is niet nodig voor een goede match.'],['Alles: tarieven, planning, klanten en laadmeters', false, 'Tarieven en klantgegevens deel je juist niet. Alleen de logistieke signalen.'],['Alleen je route en datum, verder niets', false, 'Bijna — maar laadmeters en type lading zijn ook nodig voor een goede match.']],
+    choicesM5b: [['Ongeveer 5%', false, 'Helaas is het veel hoger. Volgens Eurostat reed in 2022 ruim 20% van alle EU-vrachtkilometers leeg.'],['Ongeveer 20%', true, 'Correct! Volgens Eurostat (2022) reed ruim 20% van alle EU-vrachtkilometers leeg — goed voor 34 miljard lege kilometers in 2021.'],['Meer dan 50%', false, 'Het is hoog, maar niet zo hoog. Het ligt rond de 20% — wat op zichzelf al enorm is.']],
+    choicesM5c: [['Direct een duur IT-systeem aanschaffen', false, 'Een duur IT-systeem is niet nodig om te beginnen. Start met oriënteren.'],['Wachten tot de overheid het verplicht stelt', false, 'Je kunt vandaag al beginnen met oriënteren en het gesprek aangaan.'],['Inventariseer je lege ritten en oriënteer je op beschikbare platforms', true, 'Precies! Begin klein: inventariseer en oriënteer je. Geen verplichtingen nodig.']],
   },
   en: {
-    introList: ['What data sharing concretely means for your business','Why it is safer than you think','What first step you can take tomorrow'],
-    finalList: ['Empty trips cost money — and are largely avoidable','Federated data sharing means: sharing smart signals, not sensitive data','Fear of misuse is understandable but largely unfounded','The first step is accessible — start by exploring'],
-    stepsM2: ['Jan tells his system: "I have 40% spare space tomorrow on the Tilburg–Rotterdam route."','The system anonymously matches this with other companies looking for cargo on the same route.','Jan receives a notification: "There may be a match — do you want to know more?" Only then is contact made.','Jan decides himself whether to proceed. His rates and customer data remain hidden.'],
-    stepsM4: ['<strong>Assess:</strong> How many trips per week do you drive with empty space? Make it concrete.','<strong>Explore:</strong> Look at what TLN or evofenedex offers in terms of data sharing.','<strong>Ask:</strong> Talk to a fellow entrepreneur in your region.','<strong>Pilot:</strong> Many platforms offer a free trial. Try it with no obligations.'],
+    introList: ['What data sharing concretely means for your company or organisation','Why it is safer than you think','What first step you can take tomorrow'],
+    finalList: ['Empty trips cost money and CO₂ — and are largely avoidable','Federated data sharing: share route, date, loading metres and cargo type — not rates or customer data','Fear of misuse is understandable but largely unfounded','A match is a starting point: you negotiate yourself and process it in your planning'],
+    shareYes: ['Available loading metres','Route (from A to B)','Date and time window','Cargo type (e.g. dry, refrigerated, hazardous)'],
+    shareNo: ['Your rates','Customer data','Full schedule','Margins and profit figures'],
+    processFlow: [
+      ['1', 'Share signal', 'Thomas enters in the app: "3 loading metres available, Hamburg–Rotterdam, Tuesday 08:00–12:00, dry cargo."'],
+      ['2', 'Anonymous matching', 'The system anonymously finds a party looking for cargo on the same route. No names, no rates visible.'],
+      ['3', 'Notification & decision', 'Thomas receives a notification. He decides himself whether to make contact. Only then are names exchanged.'],
+      ['4', 'Negotiation', 'Thomas and the other party agree on price and terms. Loading/unloading sequence, driver hours and cargo type are discussed.'],
+      ['5', 'Processing in planning', 'Thomas takes the cargo and processes it in his own planning system. The trip that would have been empty is now profitable.'],
+    ],
+    stepsM4: ['<strong>Assess:</strong> How many trips per week does your company drive with empty space? Make it concrete.','<strong>Explore:</strong> Look at what TLN or evofenedex offers in terms of data sharing.','<strong>Ask:</strong> Discuss it with colleagues or an entrepreneur in your region.','<strong>Pilot:</strong> Many platforms offer a free trial. Try it with no obligations.'],
     reflectionPlaceholder: 'Type your thoughts here...',
-    calcLabel: 'Estimated loss per year',
-    choicesM1: ['Yes, I recognise this — it happens regularly','Sometimes, but I solve it through my network','Not really — we always drive full'],
+    choicesM1: ['Yes, I recognise this — it happens regularly','Sometimes, but we solve it through our network','Not really — we always drive full'],
     fbM1: 'No answer is wrong here. In the next modules you will learn how data sharing addresses exactly this problem.',
-    choicesM2: [['Your rates, customer data and full schedule', false, 'Your rates and customer data are precisely what you do NOT share.'],['Only an anonymous signal: available space on a route and date', true, 'Exactly! Only a signal. Your sensitive business information stays hidden.'],['A financial payment to other parties', false, 'Your financial data stays completely hidden.']],
-    choicesM3: [['Agree — competitors can see my rates', false, 'This is a common fear, but with federated data sharing this is not the case.'],['Disagree — I decide what I share', true, 'Correct! Rates and customer data stay completely hidden. You decide what is visible.']],
-    choicesM5a: [['Your rates are automatically compared with competitors', false, 'Your rates stay hidden.'],['You can reduce empty trips without sharing sensitive data', true, 'Exactly! You can reduce empty trips by sharing smart signals.'],['You no longer need to maintain customer contact', false, 'Data sharing does not replace customer contact.']],
-    choicesM5b: [['Your full customer list and rates', false, 'Customer data is precisely what you do not share.'],['Only an anonymous signal: available space on a route', true, 'Correct! Only an anonymous signal.'],['Your profit and loss account', false, 'Your financial data stays completely hidden.']],
-    choicesM5c: [['Buy an expensive IT system immediately', false, 'An expensive IT system is not needed to get started.'],['Wait until the government makes it mandatory', false, 'You can start exploring today.'],['Assess your empty trips and explore available platforms', true, 'Exactly! Start small: assess and explore.']],
+    choicesM2: [['Route, date, loading metres and cargo type', true, 'Exactly! These are the minimum details needed for a match. Nothing more.'],['Your full schedule including customer data', false, 'Customer data is precisely what you do not share. Only the logistical signals needed for a match.'],['Your rates so the system can find the cheapest option', false, 'Rates stay completely hidden. You negotiate yourself after a match is found.']],
+    choicesM3: [['Agree — competitors can see my rates', false, 'This is a common fear, but with federated data sharing this is not the case. Rates are not shared.'],['Disagree — I decide what I share', true, 'Correct! You only share logistical signals. Rates and customer data stay completely hidden.']],
+    choicesM5a: [['Route, date, available loading metres and cargo type', true, 'Exactly! These are the four elements you share. Nothing more is needed for a good match.'],['Everything: rates, schedule, customers and loading metres', false, 'Rates and customer data are precisely what you do not share. Only the logistical signals.'],['Only your route and date, nothing else', false, 'Almost — but loading metres and cargo type are also needed for a good match.']],
+    choicesM5b: [['About 5%', false, 'Unfortunately it is much higher. According to Eurostat, over 20% of all EU freight kilometres were driven empty in 2022.'],['About 20%', true, 'Correct! According to Eurostat (2022), over 20% of all EU freight kilometres were driven empty — equivalent to 34 billion empty kilometres in 2021.'],['More than 50%', false, 'It is high, but not that high. It is around 20% — which is already enormous.']],
+    choicesM5c: [['Buy an expensive IT system immediately', false, 'An expensive IT system is not needed to get started. Start by exploring.'],['Wait until the government makes it mandatory', false, 'You can start exploring and having conversations today.'],['Assess your empty trips and explore available platforms', true, 'Exactly! Start small: assess and explore. No obligations needed.']],
   }
 };
 
@@ -640,61 +698,60 @@ function applyLang() {
     if (txt) el.innerHTML = txt;
   });
   const d = t[lang];
-  // intro list
   const il = document.getElementById('intro-list');
   if (il) il.innerHTML = d.introList.map(i => `<li>${i}</li>`).join('');
-  // final list
   const fl = document.getElementById('final-list');
   if (fl) fl.innerHTML = d.finalList.map(i => `<li>${i}</li>`).join('');
-  // steps m2
-  const sm2 = document.getElementById('steps-m2');
-  if (sm2) sm2.innerHTML = d.stepsM2.map((s,i) => `<li><div class="step-num">${i+1}</div><p>${s}</p></li>`).join('');
-  // steps m4
+
+  const sy = document.getElementById('share-yes-list');
+  if (sy) sy.innerHTML = d.shareYes.map(i => `<li>${i}</li>`).join('');
+  const sn = document.getElementById('share-no-list');
+  if (sn) sn.innerHTML = d.shareNo.map(i => `<li>${i}</li>`).join('');
+
+  const pf = document.getElementById('process-flow');
+  if (pf) pf.innerHTML = d.processFlow.map(([num, title, desc]) =>
+    `<div class="process-step"><div class="process-icon">${num}</div><div><div class="step-title">${title}</div><p>${desc}</p></div></div>`
+  ).join('');
+
   const sm4 = document.getElementById('steps-m4');
   if (sm4) sm4.innerHTML = d.stepsM4.map((s,i) => `<li><div class="step-num">${i+1}</div><p>${s}</p></li>`).join('');
-  // reflection placeholder
+
   const ref = document.getElementById('reflection-m4');
   if (ref) ref.placeholder = d.reflectionPlaceholder;
-  // choices
-  buildChoicesM1(); buildChoicesM2(); buildChoicesM3();
-  buildChoicesM5('m5a'); buildChoicesM5('m5b'); buildChoicesM5('m5c');
+
+  buildChoices('choices-m1', d.choicesM1, 'm1', true);
+  buildChoices('choices-m2', d.choicesM2, 'm2', false);
+  buildChoices('choices-m3', d.choicesM3, 'm3', false);
+  buildChoices('choices-m5a', d.choicesM5a, 'm5a', false);
+  buildChoices('choices-m5b', d.choicesM5b, 'm5b', false);
+  buildChoices('choices-m5c', d.choicesM5c, 'm5c', false);
 }
 
-function buildChoicesM1() {
-  const el = document.getElementById('choices-m1');
+function buildChoices(elId, choices, module, isReflection) {
+  const el = document.getElementById(elId);
   if (!el) return;
-  el.innerHTML = t[lang].choicesM1.map(c =>
-    `<button class="choice-btn" onclick="selectChoice(this,'m1')">${c}</button>`
-  ).join('');
-}
-function buildChoicesM2() {
-  const el = document.getElementById('choices-m2');
-  if (!el) return;
-  el.innerHTML = t[lang].choicesM2.map(([txt, correct, msg]) =>
-    `<button class="choice-btn" onclick="checkAnswer(this,${correct},'m2','${msg.replace(/'/g,"&#39;")}')">${txt}</button>`
-  ).join('');
-}
-function buildChoicesM3() {
-  const el = document.getElementById('choices-m3');
-  if (!el) return;
-  el.innerHTML = t[lang].choicesM3.map(([txt, correct, msg]) =>
-    `<button class="choice-btn" onclick="checkAnswer(this,${correct},'m3','${msg.replace(/'/g,"&#39;")}')">${txt}</button>`
-  ).join('');
-}
-function buildChoicesM5(mod) {
-  const el = document.getElementById('choices-' + mod);
-  if (!el) return;
-  el.innerHTML = t[lang]['choices' + mod.charAt(0).toUpperCase() + mod.slice(1)].map(([txt, correct, msg]) =>
-    `<button class="choice-btn" onclick="checkAnswer(this,${correct},'${mod}','${msg.replace(/'/g,"&#39;")}')">${txt}</button>`
-  ).join('');
+  if (isReflection) {
+    el.innerHTML = choices.map(c =>
+      `<button class="choice-btn" onclick="selectChoice(this,'${module}')">${c}</button>`
+    ).join('');
+  } else {
+    el.innerHTML = choices.map(([txt, correct, msg]) =>
+      `<button class="choice-btn" onclick="checkAnswer(this,${correct},'${module}',\`${msg.replace(/`/g,"'")}\`)">${txt}</button>`
+    ).join('');
+  }
 }
 
 function updateCalc() {
   const ritten = parseFloat(document.getElementById('calc-ritten').value) || 0;
   const km = parseFloat(document.getElementById('calc-km').value) || 0;
   const kosten = parseFloat(document.getElementById('calc-kosten').value) || 0;
-  const result = ritten * km * kosten * 52;
-  document.getElementById('calc-output').textContent = '€' + Math.round(result).toLocaleString('nl-NL');
+  const co2 = parseFloat(document.getElementById('calc-co2').value) || 0;
+  const leegPct = 0.20;
+  const legeRitten = ritten * leegPct;
+  const eur = legeRitten * km * kosten * 52;
+  const co2kg = legeRitten * km * co2 * 52;
+  document.getElementById('calc-output-eur').textContent = '€' + Math.round(eur).toLocaleString('nl-NL');
+  document.getElementById('calc-output-co2').textContent = Math.round(co2kg).toLocaleString('nl-NL') + ' kg';
 }
 
 function goTo(id) {
