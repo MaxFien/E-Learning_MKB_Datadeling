@@ -7,13 +7,15 @@
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { font-family: 'Segoe UI', sans-serif; background: #f0f4f8; min-height: 100vh; }
-
   .screen { display: none; min-height: 100vh; flex-direction: column; }
   .screen.active { display: flex; }
 
   /* PROGRESS */
-  .progress-bar { background: #e0e0e0; height: 6px; width: 100%; }
+  .progress-wrap { background: #e0e0e0; }
+  .progress-bar { height: 6px; }
   .progress-fill { background: #1a1a2e; height: 6px; transition: width 0.4s; }
+  .progress-label { font-size: 11px; color: #888; padding: 6px 24px; background: #f5f5f5; display: flex; justify-content: space-between; }
+  .progress-label .mod-name { font-weight: 600; color: #1a1a2e; }
 
   /* HEADER */
   .header { background: #1a1a2e; color: white; padding: 16px 24px; display: flex; align-items: center; justify-content: space-between; }
@@ -31,24 +33,30 @@
   .card.red { border-left-color: #ef476f; }
   .card.blue { border-left-color: #118ab2; }
   .card.orange { border-left-color: #f4845f; }
-
   .card-label { font-size: 10px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 8px; color: #888; }
   .card h2 { font-size: 18px; font-weight: 500; color: #1a1a2e; margin-bottom: 10px; line-height: 1.4; }
   .card p { font-size: 14px; color: #444; line-height: 1.7; margin-bottom: 10px; }
   .card p:last-child { margin-bottom: 0; }
 
-  /* SCENARIO BOX */
+  /* SCENARIO */
   .scenario { background: #f5f5f5; border-radius: 8px; padding: 16px; margin: 12px 0; }
   .scenario .name { font-size: 12px; font-weight: 700; color: #1a1a2e; margin-bottom: 6px; }
   .scenario p { font-size: 13px; color: #333; line-height: 1.7; }
-
-  /* THOUGHT BUBBLE */
   .thought { background: #fff8ec; border: 1.5px dashed #ffd166; border-radius: 12px; padding: 14px 18px; margin: 12px 0; font-size: 13px; color: #7a4f00; font-style: italic; line-height: 1.6; }
-
-  /* HIGHLIGHT BOX */
   .highlight { background: #1a1a2e; border-radius: 10px; padding: 16px 20px; margin: 14px 0; }
   .highlight p { color: #e0e0ff; font-size: 13px; line-height: 1.7; }
   .highlight strong { color: #c0c0ff; }
+
+  /* CALCULATOR */
+  .calc { background: #f0f4f8; border-radius: 12px; padding: 18px; margin: 14px 0; }
+  .calc h3 { font-size: 13px; font-weight: 700; color: #1a1a2e; margin-bottom: 14px; }
+  .calc-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; gap: 10px; }
+  .calc-row label { font-size: 12px; color: #555; flex: 1; }
+  .calc-row input { width: 80px; border: 1.5px solid #ddd; border-radius: 6px; padding: 6px 10px; font-size: 13px; font-family: inherit; text-align: right; }
+  .calc-row input:focus { outline: none; border-color: #1a1a2e; }
+  .calc-result { background: #1a1a2e; border-radius: 8px; padding: 12px 16px; margin-top: 8px; display: flex; justify-content: space-between; align-items: center; }
+  .calc-result .lbl { font-size: 12px; color: #a0a0d0; }
+  .calc-result .val { font-size: 20px; font-weight: 700; color: white; }
 
   /* STATS */
   .stats { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 14px 0; }
@@ -56,15 +64,13 @@
   .stat .num { font-size: 28px; font-weight: 700; color: #1a1a2e; }
   .stat .lbl { font-size: 11px; color: #888; margin-top: 3px; }
 
-  /* CHOICE BUTTONS */
+  /* CHOICES */
   .choices { display: flex; flex-direction: column; gap: 10px; margin: 16px 0; }
-  .choice-btn { background: white; border: 1.5px solid #ddd; border-radius: 10px; padding: 14px 18px; font-size: 14px; color: #333; cursor: pointer; text-align: left; transition: all 0.2s; }
+  .choice-btn { background: white; border: 1.5px solid #ddd; border-radius: 10px; padding: 14px 18px; font-size: 14px; color: #333; cursor: pointer; text-align: left; transition: all 0.2s; font-family: inherit; }
   .choice-btn:hover { border-color: #1a1a2e; background: #f0f4f8; }
   .choice-btn.correct { border-color: #06d6a0; background: #edfdf7; color: #003d2e; }
   .choice-btn.wrong { border-color: #ef476f; background: #fff0f3; color: #7a0020; }
   .choice-btn.neutral { border-color: #ffd166; background: #fffbe0; color: #5c3a00; }
-
-  /* FEEDBACK */
   .feedback { display: none; border-radius: 8px; padding: 14px 16px; margin-top: 10px; font-size: 13px; line-height: 1.6; }
   .feedback.show { display: block; }
   .feedback.good { background: #edfdf7; color: #003d2e; border-left: 3px solid #06d6a0; }
@@ -75,28 +81,31 @@
   .reflection-input { width: 100%; border: 1.5px solid #ddd; border-radius: 8px; padding: 12px; font-size: 13px; font-family: inherit; resize: vertical; min-height: 80px; margin-top: 8px; }
   .reflection-input:focus { outline: none; border-color: #1a1a2e; }
 
-  /* NAV BUTTONS */
+  /* NAV */
   .nav { padding: 20px 24px; max-width: 680px; margin: 0 auto; width: 100%; display: flex; justify-content: space-between; align-items: center; }
   .btn { background: #1a1a2e; color: white; border: none; border-radius: 8px; padding: 12px 28px; font-size: 14px; cursor: pointer; font-family: inherit; transition: opacity 0.2s; }
   .btn:hover { opacity: 0.85; }
   .btn.secondary { background: white; color: #1a1a2e; border: 1.5px solid #ddd; }
   .btn:disabled { opacity: 0.3; cursor: default; }
 
-  /* INTRO SCREEN */
+  /* INTRO */
   .intro-hero { background: #1a1a2e; color: white; padding: 48px 24px; text-align: center; }
   .intro-hero h1 { font-size: 26px; font-weight: 500; margin-bottom: 8px; }
   .intro-hero p { font-size: 15px; color: #c0c0ff; margin-bottom: 4px; }
-  .intro-meta { display: flex; gap: 16px; justify-content: center; margin-top: 16px; }
+  .intro-meta { display: flex; gap: 16px; justify-content: center; margin-top: 16px; flex-wrap: wrap; }
   .intro-meta span { font-size: 12px; color: #7070aa; background: rgba(255,255,255,0.08); padding: 5px 12px; border-radius: 20px; }
   .intro-content { padding: 28px 24px; max-width: 680px; margin: 0 auto; }
 
-  /* FINAL SCREEN */
-  .final-hero { background: #06d6a0; padding: 40px 24px; text-align: center; }
-  .final-hero h1 { font-size: 24px; font-weight: 500; color: #003d2e; }
-  .final-hero p { color: #004d38; margin-top: 6px; }
-  .score-circle { width: 100px; height: 100px; border-radius: 50%; background: white; display: flex; flex-direction: column; align-items: center; justify-content: center; margin: 16px auto; }
-  .score-circle .num { font-size: 32px; font-weight: 700; color: #1a1a2e; }
-  .score-circle .lbl { font-size: 10px; color: #888; }
+  /* LANGUAGE SCREEN */
+  .lang-screen { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; background: #1a1a2e; padding: 40px 24px; text-align: center; }
+  .lang-screen h1 { font-size: 22px; font-weight: 500; color: white; margin-bottom: 8px; }
+  .lang-screen p { font-size: 14px; color: #7070aa; margin-bottom: 32px; }
+  .lang-buttons { display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; }
+  .lang-btn { background: white; border: none; border-radius: 12px; padding: 20px 36px; cursor: pointer; font-family: inherit; transition: transform 0.15s; }
+  .lang-btn:hover { transform: scale(1.04); }
+  .lang-btn .flag { font-size: 32px; display: block; margin-bottom: 8px; }
+  .lang-btn .lang-name { font-size: 14px; font-weight: 700; color: #1a1a2e; }
+  .lang-btn .lang-sub { font-size: 11px; color: #888; margin-top: 2px; }
 
   /* ANALOGY */
   .analogy { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 14px 0; }
@@ -109,504 +118,629 @@
   .step-list li { display: flex; gap: 12px; align-items: flex-start; }
   .step-num { width: 26px; height: 26px; border-radius: 50%; background: #1a1a2e; color: white; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
   .step-list p { font-size: 13px; color: #444; line-height: 1.6; }
+
+  /* FINAL */
+  .final-hero { background: #06d6a0; padding: 40px 24px; text-align: center; }
+  .final-hero h1 { font-size: 24px; font-weight: 500; color: #003d2e; }
+  .final-hero p { color: #004d38; margin-top: 6px; }
+  .score-circle { width: 100px; height: 100px; border-radius: 50%; background: white; display: flex; flex-direction: column; align-items: center; justify-content: center; margin: 16px auto; }
+  .score-circle .num { font-size: 32px; font-weight: 700; color: #1a1a2e; }
+  .score-circle .lbl { font-size: 10px; color: #888; }
 </style>
 </head>
 <body>
 
-<!-- INTRO SCREEN -->
-<div class="screen active" id="s-intro">
+<!-- LANGUAGE SELECTION -->
+<div class="screen active" id="s-lang">
+  <div style="flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; background:#1a1a2e; padding:40px 24px;">
+    <div style="margin-bottom:32px; text-align:center;">
+      <div style="font-size:11px; color:#7070aa; letter-spacing:2px; margin-bottom:12px;">DATA SHARING IN LOGISTICS</div>
+      <div style="font-size:28px; font-weight:500; color:white; line-height:1.3; margin-bottom:8px;">Welkom / Welcome</div>
+      <div style="width:40px; height:3px; background:#c0c0ff; margin:0 auto 20px;"></div>
+      <div style="font-size:14px; color:#7070aa;">Kies je taal om te beginnen<br>Choose your language to start</div>
+    </div>
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; width:100%; max-width:400px;">
+      <button onclick="setLang('nl')" style="background:white; border:none; border-radius:16px; padding:28px 20px; cursor:pointer; font-family:inherit; transition:transform 0.15s; display:flex; flex-direction:column; align-items:center; gap:10px;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+        <div style="font-size:16px; font-weight:700; color:#1a1a2e;">Nederlands</div>
+        <div style="font-size:11px; color:#888;">Dutch</div>
+      </button>
+      <button onclick="setLang('en')" style="background:white; border:none; border-radius:16px; padding:28px 20px; cursor:pointer; font-family:inherit; transition:transform 0.15s; display:flex; flex-direction:column; align-items:center; gap:10px;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+        <div style="font-size:16px; font-weight:700; color:#1a1a2e;">English</div>
+        <div style="font-size:11px; color:#888;">Engels</div>
+      </button>
+    </div>
+    <div style="margin-top:40px; font-size:11px; color:#4a4a6a; text-align:center;">Breda University of Applied Sciences · Physical Internet</div>
+  </div>
+</div>
+
+<!-- INTRO -->
+<div class="screen" id="s-intro">
   <div class="intro-hero">
-    <h1>Datadeling in de logistiek</h1>
-    <p>Een praktische e-learning voor ondernemers in het transport</p>
+    <h1 data-nl="Datadeling in de logistiek" data-en="Data sharing in logistics"></h1>
+    <p data-nl="Een praktische e-learning voor ondernemers in het transport" data-en="A practical e-learning for transport entrepreneurs"></p>
     <div class="intro-meta">
-      <span>15–20 minuten</span>
-      <span>5 modules</span>
-      <span>Geen voorkennis nodig</span>
+      <span data-nl="15–20 minuten" data-en="15–20 minutes"></span>
+      <span data-nl="5 modules" data-en="5 modules"></span>
+      <span data-nl="Geen voorkennis nodig" data-en="No prior knowledge needed"></span>
     </div>
   </div>
   <div class="intro-content">
     <div class="card yellow">
-      <div class="card-label">Waarom deze e-learning?</div>
-      <p>Elke dag rijden er vrachtwagens en containers half leeg over Europese wegen. Niet omdat er geen lading is — maar omdat de juiste informatie niet op het juiste moment beschikbaar is. Deze e-learning laat je zien hoe dat anders kan, en wat jij daarin kunt doen.</p>
+      <div class="card-label" data-nl="Waarom deze e-learning?" data-en="Why this e-learning?"></div>
+      <p data-nl="Elke dag rijden er vrachtwagens en containers half leeg over Europese wegen. Niet omdat er geen lading is — maar omdat de juiste informatie niet op het juiste moment beschikbaar is. Deze e-learning laat je zien hoe dat anders kan, en wat jij daarin kunt doen." data-en="Every day, trucks and containers drive half-empty across European roads. Not because there is no cargo — but because the right information is not available at the right time. This e-learning shows you how things can be different, and what you can do about it."></p>
     </div>
     <div class="card green">
-      <div class="card-label">Na deze e-learning weet je...</div>
-      <ul style="font-size:14px; color:#444; line-height:2; padding-left:18px;">
-        <li>Wat datadeling concreet betekent voor jouw bedrijf</li>
-        <li>Waarom het veiliger is dan je denkt</li>
-        <li>Welke eerste stap jij morgen kunt zetten</li>
-      </ul>
+      <div class="card-label" data-nl="Na deze e-learning weet je..." data-en="After this e-learning you will know..."></div>
+      <ul style="font-size:14px; color:#444; line-height:2; padding-left:18px;" id="intro-list"></ul>
     </div>
   </div>
   <div class="nav">
-    <div></div>
-    <button class="btn" onclick="goTo('s-m1-1')">Begin de e-learning</button>
+    <button class="btn secondary" onclick="goTo('s-lang')" data-nl="Taal wijzigen" data-en="Change language"></button>
+    <button class="btn" onclick="goTo('s-m1-1')" data-nl="Begin de e-learning" data-en="Start the e-learning"></button>
   </div>
 </div>
 
-<!-- MODULE 1: HET SCENARIO -->
+<!-- MODULE 1 -->
 <div class="screen" id="s-m1-1">
-  <div class="progress-bar"><div class="progress-fill" style="width:10%"></div></div>
+  <div class="progress-wrap">
+    <div class="progress-bar"><div class="progress-fill" style="width:10%"></div></div>
+    <div class="progress-label"><span data-nl="Module 1 van 5" data-en="Module 1 of 5"></span><span class="mod-name" data-nl="De herkenbare situatie" data-en="The recognisable situation"></span></div>
+  </div>
   <div class="header">
-    <div><div class="module-label">MODULE 1 VAN 5</div><div class="module-title">De herkenbare situatie</div></div>
+    <div><div class="module-label" data-nl="MODULE 1 VAN 5" data-en="MODULE 1 OF 5"></div><div class="module-title" data-nl="De herkenbare situatie" data-en="The recognisable situation"></div></div>
     <div class="timer">~3 min</div>
   </div>
   <div class="content">
     <div class="card yellow">
-      <div class="card-label">Maak kennis met Jan</div>
-      <h2>Een dag in het leven van transportbedrijf Van der Berg</h2>
+      <div class="card-label" data-nl="Maak kennis met Jan" data-en="Meet Jan"></div>
+      <h2 data-nl="Een dag in het leven van transportbedrijf Van der Berg" data-en="A day in the life of transport company Van der Berg"></h2>
     </div>
     <div class="scenario">
-      <div class="name">Transportbedrijf Van der Berg — Tilburg</div>
-      <p>Jan van der Berg runt een transportbedrijf met 18 vrachtwagens. Hij vervoert voornamelijk pallets voor productiebedrijven in de regio Brabant. Het bedrijf bestaat al 22 jaar en heeft een vaste klantenkring opgebouwd.</p>
-      <p style="margin-top:8px;">Op een dinsdagochtend vertrekt een van zijn chauffeurs richting Rotterdam — met een truck die voor 60% gevuld is. De overige 40% is leeg. Er is simpelweg geen lading beschikbaar voor die ruimte.</p>
+      <div class="name" data-nl="Transportbedrijf Van der Berg — Tilburg" data-en="Transport company Van der Berg — Tilburg"></div>
+      <p data-nl="Jan van der Berg runt een transportbedrijf met 18 vrachtwagens. Hij vervoert voornamelijk pallets voor productiebedrijven in de regio Brabant. Het bedrijf bestaat al 22 jaar en heeft een vaste klantenkring opgebouwd." data-en="Jan van der Berg runs a transport company with 18 trucks. He mainly transports pallets for manufacturing companies in the Brabant region. The company has been around for 22 years and has built up a loyal customer base."></p>
+      <p style="margin-top:8px;" data-nl="Op een dinsdagochtend vertrekt een van zijn chauffeurs richting Rotterdam — met een truck die voor 60% gevuld is. De overige 40% is leeg. Er is simpelweg geen lading beschikbaar voor die ruimte." data-en="On a Tuesday morning, one of his drivers sets off towards Rotterdam — with a truck that is 60% full. The remaining 40% is empty. There is simply no cargo available for that space."></p>
     </div>
-    <div class="thought">"Zonde van de brandstof, maar wat kan ik eraan doen? Ik weet niet wat anderen in de buurt nodig hebben."</div>
+    <div class="thought" data-nl='"Zonde van de brandstof, maar wat kan ik eraan doen? Ik weet niet wat anderen in de buurt nodig hebben."' data-en='"What a waste of fuel, but what can I do about it? I have no idea what other companies nearby need."'></div>
     <div class="card blue">
-      <div class="card-label">Wist je dat...</div>
-      <p>Gemiddeld rijdt <strong>30% van alle vrachtwagens in Europa leeg</strong>. In Nederland gaat het om miljoenen lege kilometers per jaar — met directe kosten voor de ondernemer en onnodige CO₂-uitstoot.</p>
+      <div class="card-label" data-nl="Wist je dat..." data-en="Did you know..."></div>
+      <p data-nl="Gemiddeld rijdt <strong>30% van alle vrachtwagens in Europa leeg</strong>. In Europa gaat het om miljoenen lege kilometers per jaar — met directe kosten voor de ondernemer en onnodige CO₂-uitstoot." data-en="On average, <strong>30% of all trucks in Europe drive empty</strong>. Across Europe, this amounts to millions of empty kilometres per year — with direct costs for entrepreneurs and unnecessary CO₂ emissions."></p>
     </div>
   </div>
   <div class="nav">
-    <button class="btn secondary" onclick="goTo('s-intro')">Terug</button>
-    <button class="btn" onclick="goTo('s-m1-2')">Verder</button>
+    <button class="btn secondary" onclick="goTo('s-intro')" data-nl="Terug" data-en="Back"></button>
+    <button class="btn" onclick="goTo('s-m1-2')" data-nl="Verder" data-en="Next"></button>
   </div>
 </div>
 
 <div class="screen" id="s-m1-2">
-  <div class="progress-bar"><div class="progress-fill" style="width:18%"></div></div>
+  <div class="progress-wrap">
+    <div class="progress-bar"><div class="progress-fill" style="width:18%"></div></div>
+    <div class="progress-label"><span data-nl="Module 1 van 5" data-en="Module 1 of 5"></span><span class="mod-name" data-nl="De herkenbare situatie" data-en="The recognisable situation"></span></div>
+  </div>
   <div class="header">
-    <div><div class="module-label">MODULE 1 VAN 5</div><div class="module-title">De herkenbare situatie</div></div>
+    <div><div class="module-label" data-nl="MODULE 1 VAN 5" data-en="MODULE 1 OF 5"></div><div class="module-title" data-nl="De herkenbare situatie" data-en="The recognisable situation"></div></div>
     <div class="timer">~3 min</div>
   </div>
   <div class="content">
     <div class="card red">
-      <div class="card-label">Het probleem</div>
-      <h2>Wat kost een lege kilometer Jan eigenlijk?</h2>
+      <div class="card-label" data-nl="Het probleem" data-en="The problem"></div>
+      <h2 data-nl="Bereken zelf wat lege ritten jou kosten" data-en="Calculate what empty trips cost you"></h2>
+      <p data-nl="Vul jouw eigen cijfers in om te zien wat lege ritten jou kosten." data-en="Fill in your own numbers to see what empty trips cost you."></p>
     </div>
-    <div class="stats">
-      <div class="stat"><div class="num">40%</div><div class="lbl">van zijn truck is leeg</div></div>
-      <div class="stat"><div class="num">3x</div><div class="lbl">per week rijdt hij zo</div></div>
-      <div class="stat"><div class="num">€1,80</div><div class="lbl">kosten per lege km</div></div>
-      <div class="stat"><div class="num">±€28K</div><div class="lbl">verlies per jaar*</div></div>
+    <div class="calc">
+      <h3 data-nl="Jouw kostencalculator" data-en="Your cost calculator"></h3>
+      <div class="calc-row">
+        <label data-nl="Lege ritten per week" data-en="Empty trips per week"></label>
+        <input type="number" id="calc-ritten" value="3" min="0" oninput="updateCalc()">
+      </div>
+      <div class="calc-row">
+        <label data-nl="Gemiddelde ritafstand (km)" data-en="Average trip distance (km)"></label>
+        <input type="number" id="calc-km" value="150" min="0" oninput="updateCalc()">
+      </div>
+      <div class="calc-row">
+        <label data-nl="Kosten per lege km (€)" data-en="Cost per empty km (€)"></label>
+        <input type="number" id="calc-kosten" value="1.80" min="0" step="0.1" oninput="updateCalc()">
+      </div>
+      <div class="calc-result">
+        <div class="lbl" data-nl="Geschat verlies per jaar" data-en="Estimated loss per year"></div>
+        <div class="val" id="calc-output">€42.120</div>
+      </div>
     </div>
-    <p style="font-size:11px; color:#999; margin-top:-8px;">*Schatting op basis van gemiddelde ritafstand van 200 km</p>
-    <div class="card orange" style="margin-top:16px;">
-      <div class="card-label">De kern van het probleem</div>
-      <p>Jan heeft geen informatie over wat andere bedrijven in zijn regio nodig hebben. En die andere bedrijven weten niet dat Jan ruimte over heeft. De informatie bestaat — maar komt niet samen.</p>
+    <div class="card orange">
+      <div class="card-label" data-nl="De kern van het probleem" data-en="The core problem"></div>
+      <p data-nl="Jan heeft geen informatie over wat andere bedrijven in zijn regio nodig hebben. En die andere bedrijven weten niet dat Jan ruimte over heeft. De informatie bestaat — maar komt niet samen." data-en="Jan has no information about what other companies in his region need. And those other companies don't know that Jan has spare capacity. The information exists — but never meets."></p>
     </div>
-    <div class="thought">"Als ik zou weten dat een bedrijf 20 km verderop dringend iets vervoerd wil hebben — dan had ik dat meegenomen. Maar hoe kom ik daar achter?"</div>
   </div>
   <div class="nav">
-    <button class="btn secondary" onclick="goTo('s-m1-1')">Terug</button>
-    <button class="btn" onclick="goTo('s-m1-q')">Verder</button>
+    <button class="btn secondary" onclick="goTo('s-m1-1')" data-nl="Terug" data-en="Back"></button>
+    <button class="btn" onclick="goTo('s-m1-q')" data-nl="Verder" data-en="Next"></button>
   </div>
 </div>
 
 <div class="screen" id="s-m1-q">
-  <div class="progress-bar"><div class="progress-fill" style="width:24%"></div></div>
+  <div class="progress-wrap">
+    <div class="progress-bar"><div class="progress-fill" style="width:24%"></div></div>
+    <div class="progress-label"><span data-nl="Module 1 van 5" data-en="Module 1 of 5"></span><span class="mod-name" data-nl="Reflectievraag" data-en="Reflection question"></span></div>
+  </div>
   <div class="header">
-    <div><div class="module-label">MODULE 1 VAN 5</div><div class="module-title">Reflectievraag</div></div>
+    <div><div class="module-label" data-nl="MODULE 1 VAN 5" data-en="MODULE 1 OF 5"></div><div class="module-title" data-nl="Reflectievraag" data-en="Reflection question"></div></div>
   </div>
   <div class="content">
     <div class="card yellow">
-      <div class="card-label">Even nadenken</div>
-      <h2>Herken jij dit bij jouw bedrijf?</h2>
-      <p>Jan rijdt regelmatig met lege ruimte omdat hij niet weet wat anderen nodig hebben. Hoe zit dat bij jou?</p>
+      <div class="card-label" data-nl="Even nadenken" data-en="Stop and think"></div>
+      <h2 data-nl="Herken jij dit bij jouw bedrijf?" data-en="Do you recognise this in your own business?"></h2>
+      <p data-nl="Jan rijdt regelmatig met lege ruimte. Hoe zit dat bij jou?" data-en="Jan regularly drives with empty space. How about you?"></p>
     </div>
-    <div class="choices">
-      <button class="choice-btn" onclick="selectChoice(this, 'a', 'm1')">Ja, dit herken ik goed — het gebeurt regelmatig</button>
-      <button class="choice-btn" onclick="selectChoice(this, 'b', 'm1')">Soms, maar ik los het op via mijn netwerk</button>
-      <button class="choice-btn" onclick="selectChoice(this, 'c', 'm1')">Niet echt — wij rijden altijd vol</button>
-    </div>
-    <div class="feedback info" id="fb-m1">
-      Geen enkel antwoord is fout hier — het gaat erom dat je nadenkt over je eigen situatie. In de volgende modules leer je hoe datadeling precies dit probleem kan aanpakken, ook als jij het nu al deels oplost via je netwerk.
-    </div>
+    <div class="choices" id="choices-m1"></div>
+    <div class="feedback info" id="fb-m1"></div>
   </div>
   <div class="nav">
-    <button class="btn secondary" onclick="goTo('s-m1-2')">Terug</button>
-    <button class="btn" id="btn-m1-next" disabled onclick="goTo('s-m2-1')">Verder</button>
+    <button class="btn secondary" onclick="goTo('s-m1-2')" data-nl="Terug" data-en="Back"></button>
+    <button class="btn" id="btn-m1-next" disabled onclick="goTo('s-m2-1')" data-nl="Verder" data-en="Next"></button>
   </div>
 </div>
 
-<!-- MODULE 2: WAT IS DATADELING -->
+<!-- MODULE 2 -->
 <div class="screen" id="s-m2-1">
-  <div class="progress-bar"><div class="progress-fill" style="width:32%"></div></div>
+  <div class="progress-wrap">
+    <div class="progress-bar"><div class="progress-fill" style="width:32%"></div></div>
+    <div class="progress-label"><span data-nl="Module 2 van 5" data-en="Module 2 of 5"></span><span class="mod-name" data-nl="Wat is federatieve datadeling?" data-en="What is federated data sharing?"></span></div>
+  </div>
   <div class="header">
-    <div><div class="module-label">MODULE 2 VAN 5</div><div class="module-title">Wat is federatieve datadeling?</div></div>
+    <div><div class="module-label" data-nl="MODULE 2 VAN 5" data-en="MODULE 2 OF 5"></div><div class="module-title" data-nl="Wat is federatieve datadeling?" data-en="What is federated data sharing?"></div></div>
     <div class="timer">~4 min</div>
   </div>
   <div class="content">
     <div class="card blue">
-      <div class="card-label">Uitleg zonder jargon</div>
-      <h2>Datadeling — wat betekent dat eigenlijk?</h2>
-      <p>De term "federatieve datadeling" klinkt technisch, maar het idee is simpel. Stel je voor dat Jan weet dat hij morgen lege ruimte heeft. En dat een ander bedrijf 15 km verderop weet dat ze iets vervoerd willen hebben.</p>
-      <p>Datadeling betekent: die twee stukjes informatie komen samen — <strong>zonder dat Jan zijn volledige planning hoeft te delen</strong> en zonder dat het andere bedrijf weet wie Jan is totdat ze besluiten samen te werken.</p>
+      <div class="card-label" data-nl="Uitleg zonder jargon" data-en="Plain language explanation"></div>
+      <h2 data-nl="Datadeling — wat betekent dat eigenlijk?" data-en="Data sharing — what does it actually mean?"></h2>
+      <p data-nl='De term "federatieve datadeling" klinkt technisch, maar het idee is simpel. Stel je voor dat Jan weet dat hij morgen lege ruimte heeft. En dat een ander bedrijf 15 km verderop weet dat ze iets vervoerd willen hebben.' data-en='The term "federated data sharing" sounds technical, but the idea is simple. Imagine Jan knows he has empty space tomorrow. And that another company 15 km away knows they need something transported.'></p>
+      <p data-nl="Datadeling betekent: die twee stukjes informatie komen samen — <strong>zonder dat Jan zijn volledige planning hoeft te delen</strong> en zonder dat het andere bedrijf weet wie Jan is totdat ze besluiten samen te werken." data-en="Data sharing means: those two pieces of information come together — <strong>without Jan having to share his full schedule</strong> and without the other company knowing who Jan is until they decide to work together."></p>
     </div>
     <div class="analogy">
       <div class="analogy-item">
         <div class="icon">📱</div>
-        <div class="title">Zoals een groepschat</div>
-        <p>Je deelt wat je wilt delen. Niemand ziet je andere gesprekken.</p>
+        <div class="title" data-nl="Zoals een groepschat" data-en="Like a group chat"></div>
+        <p data-nl="Je deelt wat je wilt delen. Niemand ziet je andere gesprekken." data-en="You share what you want. Nobody sees your other conversations."></p>
       </div>
       <div class="analogy-item">
         <div class="icon">🔒</div>
-        <div class="title">Maar veiliger</div>
-        <p>Jij bepaalt wat zichtbaar is. Je concurrenten zien je tarieven niet.</p>
+        <div class="title" data-nl="Maar veiliger" data-en="But safer"></div>
+        <p data-nl="Jij bepaalt wat zichtbaar is. Je concurrenten zien je tarieven niet." data-en="You decide what is visible. Competitors cannot see your rates."></p>
       </div>
     </div>
     <div class="highlight">
-      <p><strong>De kern:</strong> Je deelt geen gevoelige bedrijfsdata. Je deelt alleen een signaal — "ik heb ruimte beschikbaar op route X op datum Y." Meer niet.</p>
+      <p><strong data-nl="De kern:" data-en="The key point:"></strong> <span data-nl="Je deelt geen gevoelige bedrijfsdata. Je deelt alleen een signaal — beschikbare ruimte op route X op datum Y." data-en="You don't share sensitive business data. You only share a signal — available space on route X on date Y."></span></p>
     </div>
   </div>
   <div class="nav">
-    <button class="btn secondary" onclick="goTo('s-m1-q')">Terug</button>
-    <button class="btn" onclick="goTo('s-m2-2')">Verder</button>
+    <button class="btn secondary" onclick="goTo('s-m1-q')" data-nl="Terug" data-en="Back"></button>
+    <button class="btn" onclick="goTo('s-m2-2')" data-nl="Verder" data-en="Next"></button>
   </div>
 </div>
 
 <div class="screen" id="s-m2-2">
-  <div class="progress-bar"><div class="progress-fill" style="width:40%"></div></div>
+  <div class="progress-wrap">
+    <div class="progress-bar"><div class="progress-fill" style="width:40%"></div></div>
+    <div class="progress-label"><span data-nl="Module 2 van 5" data-en="Module 2 of 5"></span><span class="mod-name" data-nl="Wat is federatieve datadeling?" data-en="What is federated data sharing?"></span></div>
+  </div>
   <div class="header">
-    <div><div class="module-label">MODULE 2 VAN 5</div><div class="module-title">Wat is federatieve datadeling?</div></div>
+    <div><div class="module-label" data-nl="MODULE 2 VAN 5" data-en="MODULE 2 OF 5"></div><div class="module-title" data-nl="Wat is federatieve datadeling?" data-en="What is federated data sharing?"></div></div>
     <div class="timer">~4 min</div>
   </div>
   <div class="content">
     <div class="card green">
-      <div class="card-label">Hoe werkt het voor Jan?</div>
-      <h2>Stap voor stap: wat ziet Jan, wat zien anderen?</h2>
+      <div class="card-label" data-nl="Hoe werkt het voor Jan?" data-en="How does it work for Jan?"></div>
+      <h2 data-nl="Stap voor stap: wat ziet Jan, wat zien anderen?" data-en="Step by step: what does Jan see, what do others see?"></h2>
     </div>
-    <ul class="step-list">
-      <li><div class="step-num">1</div><p>Jan geeft aan zijn systeem door: "Ik heb morgen 40% ruimte vrij op de route Tilburg–Rotterdam."</p></li>
-      <li><div class="step-num">2</div><p>Het systeem matcht dit anoniem met andere bedrijven die lading zoeken op dezelfde route.</p></li>
-      <li><div class="step-num">3</div><p>Jan krijgt een melding: "Er is mogelijk een match — wil je meer weten?" Dan pas wordt contact gelegd.</p></li>
-      <li><div class="step-num">4</div><p>Jan beslist zelf of hij de samenwerking aangaat. Zijn tarieven en klantgegevens blijven verborgen.</p></li>
-    </ul>
+    <ul class="step-list" id="steps-m2"></ul>
     <div class="card yellow">
-      <div class="card-label">Wat Jan NIET deelt</div>
-      <p>Zijn prijzen, zijn klantrelaties, zijn volledige planning, zijn marges. Alleen: beschikbare ruimte op een route en datum. Meer heeft het systeem niet nodig.</p>
+      <div class="card-label" data-nl="Wat Jan NIET deelt" data-en="What Jan does NOT share"></div>
+      <p data-nl="Zijn prijzen, zijn klantrelaties, zijn volledige planning, zijn marges. Alleen: beschikbare ruimte op een route en datum. Meer heeft het systeem niet nodig." data-en="His prices, customer relationships, full schedule, margins. Only: available space on a route and date. That is all the system needs."></p>
     </div>
   </div>
   <div class="nav">
-    <button class="btn secondary" onclick="goTo('s-m2-1')">Terug</button>
-    <button class="btn" onclick="goTo('s-m2-q')">Verder</button>
+    <button class="btn secondary" onclick="goTo('s-m2-1')" data-nl="Terug" data-en="Back"></button>
+    <button class="btn" onclick="goTo('s-m2-q')" data-nl="Verder" data-en="Next"></button>
   </div>
 </div>
 
 <div class="screen" id="s-m2-q">
-  <div class="progress-bar"><div class="progress-fill" style="width:46%"></div></div>
+  <div class="progress-wrap">
+    <div class="progress-bar"><div class="progress-fill" style="width:46%"></div></div>
+    <div class="progress-label"><span data-nl="Module 2 van 5" data-en="Module 2 of 5"></span><span class="mod-name" data-nl="Kennischeck" data-en="Knowledge check"></span></div>
+  </div>
   <div class="header">
-    <div><div class="module-label">MODULE 2 VAN 5</div><div class="module-title">Kennischeck</div></div>
+    <div><div class="module-label" data-nl="MODULE 2 VAN 5" data-en="MODULE 2 OF 5"></div><div class="module-title" data-nl="Kennischeck" data-en="Knowledge check"></div></div>
   </div>
   <div class="content">
     <div class="card blue">
-      <div class="card-label">Kennischeck</div>
-      <h2>Wat deel je bij federatieve datadeling?</h2>
-      <p>Selecteer het juiste antwoord.</p>
+      <div class="card-label" data-nl="Kennischeck" data-en="Knowledge check"></div>
+      <h2 data-nl="Wat deel je bij federatieve datadeling?" data-en="What do you share in federated data sharing?"></h2>
     </div>
-    <div class="choices">
-      <button class="choice-btn" onclick="checkAnswer(this, false, 'm2', 'Je tarieven en klantgegevens zijn juist wat je NIET deelt. Dat is precies de kracht van dit systeem.')">Je tarieven, klantgegevens en volledige planning</button>
-      <button class="choice-btn" onclick="checkAnswer(this, true, 'm2', 'Precies! Je deelt alleen een signaal — beschikbare ruimte op een route en datum. Jouw gevoelige bedrijfsinformatie blijft verborgen.')">Alleen een signaal: beschikbare ruimte op een route en datum</button>
-      <button class="choice-btn" onclick="checkAnswer(this, false, 'm2', 'Je hoeft niets te betalen voor het delen van een signaal. Datadeling gaat over informatiedeling, niet over geld.')">Een financiële vergoeding aan andere partijen</button>
-    </div>
+    <div class="choices" id="choices-m2"></div>
     <div class="feedback" id="fb-m2"></div>
   </div>
   <div class="nav">
-    <button class="btn secondary" onclick="goTo('s-m2-2')">Terug</button>
-    <button class="btn" id="btn-m2-next" disabled onclick="goTo('s-m3-1')">Verder</button>
+    <button class="btn secondary" onclick="goTo('s-m2-2')" data-nl="Terug" data-en="Back"></button>
+    <button class="btn" id="btn-m2-next" disabled onclick="goTo('s-m3-1')" data-nl="Verder" data-en="Next"></button>
   </div>
 </div>
 
-<!-- MODULE 3: WAAROM DOEN BEDRIJVEN HET NIET -->
+<!-- MODULE 3 -->
 <div class="screen" id="s-m3-1">
-  <div class="progress-bar"><div class="progress-fill" style="width:54%"></div></div>
+  <div class="progress-wrap">
+    <div class="progress-bar"><div class="progress-fill" style="width:54%"></div></div>
+    <div class="progress-label"><span data-nl="Module 3 van 5" data-en="Module 3 of 5"></span><span class="mod-name" data-nl="Waarom doen bedrijven het niet?" data-en="Why don't companies do it?"></span></div>
+  </div>
   <div class="header">
-    <div><div class="module-label">MODULE 3 VAN 5</div><div class="module-title">Waarom doen bedrijven het niet?</div></div>
+    <div><div class="module-label" data-nl="MODULE 3 VAN 5" data-en="MODULE 3 OF 5"></div><div class="module-title" data-nl="Waarom doen bedrijven het niet?" data-en="Why don't companies do it?"></div></div>
     <div class="timer">~4 min</div>
   </div>
   <div class="content">
     <div class="card red">
-      <div class="card-label">De barrières</div>
-      <h2>Jan twijfelt. En hij is niet de enige.</h2>
+      <div class="card-label" data-nl="De barrières" data-en="The barriers"></div>
+      <h2 data-nl="Jan twijfelt. En hij is niet de enige." data-en="Jan hesitates. And he is not alone."></h2>
     </div>
-    <div class="thought">"Wat als een concurrent mijn informatie gebruikt? Wat als het te duur is? Wat als ik het technisch niet begrijp?"</div>
-    <p style="font-size:14px; color:#444; line-height:1.7; margin:12px 0;">Uit onderzoek onder MKB-bedrijven in de logistiek blijkt dat de grootste barrières zijn:</p>
+    <div class="thought" data-nl='"Wat als een concurrent mijn informatie gebruikt? Wat als het te duur is? Wat als ik het technisch niet begrijp?"' data-en='"What if a competitor uses my information? What if it is too expensive? What if I don\'t understand the technology?"'></div>
+    <p style="font-size:14px; color:#444; line-height:1.7; margin:12px 0;" data-nl="Uit onderzoek onder MKB-bedrijven in de logistiek blijkt dat de grootste barrières zijn:" data-en="Research among SMEs in logistics shows that the biggest barriers are:"></p>
     <div class="card orange">
-      <div class="card-label">Barrière 1 — Kennisgebrek</div>
-      <p>100% van de 18 ondervraagde bedrijven is niet of nauwelijks bekend met het begrip federatieve datadeling — 56% heeft er nog nooit van gehoord, 44% heeft er wel eens van gehoord maar kent de details niet.</p>
+      <div class="card-label" data-nl="Barrière 1 — Kennisgebrek" data-en="Barrier 1 — Lack of knowledge"></div>
+      <p data-nl="100% van de 18 ondervraagde bedrijven is niet of nauwelijks bekend met het begrip federatieve datadeling — 56% heeft er nog nooit van gehoord, 44% heeft er wel eens van gehoord maar kent de details niet." data-en="100% of the 18 surveyed companies are unfamiliar with the concept of federated data sharing — 56% have never heard of it, 44% have heard of it but don't know the details."></p>
     </div>
     <div class="card yellow">
-      <div class="card-label">Barrière 2 — Angst voor misbruik</div>
-      <p>Veel ondernemers zijn bang dat concurrenten hun informatie kunnen inzien. Die angst is begrijpelijk — maar bij federatieve datadeling is die angst grotendeels onterecht.</p>
+      <div class="card-label" data-nl="Barrière 2 — Angst voor misbruik" data-en="Barrier 2 — Fear of misuse"></div>
+      <p data-nl="Veel ondernemers zijn bang dat concurrenten hun informatie kunnen inzien. Die angst is begrijpelijk — maar bij federatieve datadeling is die angst grotendeels onterecht." data-en="Many entrepreneurs fear that competitors can view their information. That fear is understandable — but with federated data sharing, it is largely unfounded."></p>
     </div>
     <div class="card blue">
-      <div class="card-label">Barrière 3 — Kosten nooit onderzocht</div>
-      <p>72% van de ondervraagde bedrijven heeft de kosten van aansluiting nooit concreet bekeken. Nog eens 22% geeft aan niet bereid te zijn om hierin te investeren — zonder ooit de werkelijke kosten te hebben onderzocht.</p>
+      <div class="card-label" data-nl="Barrière 3 — Kosten nooit onderzocht" data-en="Barrier 3 — Costs never investigated"></div>
+      <p data-nl="72% van de ondervraagde bedrijven heeft de kosten van aansluiting nooit concreet bekeken. Nog eens 22% geeft aan niet bereid te zijn om hierin te investeren — zonder ooit de werkelijke kosten te hebben onderzocht." data-en="72% of surveyed companies have never concretely looked at the costs of joining. A further 22% say they are unwilling to invest — without ever having investigated the actual costs."></p>
     </div>
   </div>
   <div class="nav">
-    <button class="btn secondary" onclick="goTo('s-m2-q')">Terug</button>
-    <button class="btn" onclick="goTo('s-m3-q')">Verder</button>
+    <button class="btn secondary" onclick="goTo('s-m2-q')" data-nl="Terug" data-en="Back"></button>
+    <button class="btn" onclick="goTo('s-m3-q')" data-nl="Verder" data-en="Next"></button>
   </div>
 </div>
 
 <div class="screen" id="s-m3-q">
-  <div class="progress-bar"><div class="progress-fill" style="width:60%"></div></div>
+  <div class="progress-wrap">
+    <div class="progress-bar"><div class="progress-fill" style="width:60%"></div></div>
+    <div class="progress-label"><span data-nl="Module 3 van 5" data-en="Module 3 of 5"></span><span class="mod-name" data-nl="Stelling" data-en="Statement"></span></div>
+  </div>
   <div class="header">
-    <div><div class="module-label">MODULE 3 VAN 5</div><div class="module-title">Stellingen</div></div>
+    <div><div class="module-label" data-nl="MODULE 3 VAN 5" data-en="MODULE 3 OF 5"></div><div class="module-title" data-nl="Stellingen" data-en="Statements"></div></div>
   </div>
   <div class="content">
     <div class="card red">
-      <div class="card-label">Stelling</div>
-      <h2>Bij datadeling kunnen concurrenten mijn tarieven zien.</h2>
-      <p>Eens of oneens?</p>
+      <div class="card-label" data-nl="Stelling" data-en="Statement"></div>
+      <h2 data-nl="Bij datadeling kunnen concurrenten mijn tarieven zien." data-en="With data sharing, competitors can see my rates."></h2>
+      <p data-nl="Eens of oneens?" data-en="Agree or disagree?"></p>
     </div>
-    <div class="choices">
-      <button class="choice-btn" onclick="checkAnswer(this, false, 'm3', 'Dit is een veelgehoorde angst, maar bij federatieve datadeling is dit niet het geval. Je deelt alleen een signaal — geen tarieven, geen klantgegevens.')">Eens — concurrenten kunnen mijn tarieven zien</button>
-      <button class="choice-btn" onclick="checkAnswer(this, true, 'm3', 'Correct! Bij federatieve datadeling deel je alleen wat jij wilt delen. Tarieven en klantgegevens blijven volledig verborgen. Jij bepaalt wat zichtbaar is.')">Oneens — ik bepaal zelf wat ik deel</button>
-    </div>
+    <div class="choices" id="choices-m3"></div>
     <div class="feedback" id="fb-m3"></div>
   </div>
   <div class="nav">
-    <button class="btn secondary" onclick="goTo('s-m3-1')">Terug</button>
-    <button class="btn" id="btn-m3-next" disabled onclick="goTo('s-m4-1')">Verder</button>
+    <button class="btn secondary" onclick="goTo('s-m3-1')" data-nl="Terug" data-en="Back"></button>
+    <button class="btn" id="btn-m3-next" disabled onclick="goTo('s-m4-1')" data-nl="Verder" data-en="Next"></button>
   </div>
 </div>
 
-<!-- MODULE 4: WAT KAN JIJ DOEN -->
+<!-- MODULE 4 -->
 <div class="screen" id="s-m4-1">
-  <div class="progress-bar"><div class="progress-fill" style="width:72%"></div></div>
+  <div class="progress-wrap">
+    <div class="progress-bar"><div class="progress-fill" style="width:72%"></div></div>
+    <div class="progress-label"><span data-nl="Module 4 van 5" data-en="Module 4 of 5"></span><span class="mod-name" data-nl="Wat betekent dit voor jou?" data-en="What does this mean for you?"></span></div>
+  </div>
   <div class="header">
-    <div><div class="module-label">MODULE 4 VAN 5</div><div class="module-title">Wat betekent dit voor jou?</div></div>
+    <div><div class="module-label" data-nl="MODULE 4 VAN 5" data-en="MODULE 4 OF 5"></div><div class="module-title" data-nl="Wat betekent dit voor jou?" data-en="What does this mean for you?"></div></div>
     <div class="timer">~3 min</div>
   </div>
   <div class="content">
     <div class="card green">
-      <div class="card-label">Terug naar Jan</div>
-      <h2>Wat deed Jan uiteindelijk?</h2>
+      <div class="card-label" data-nl="Terug naar Jan" data-en="Back to Jan"></div>
+      <h2 data-nl="Wat deed Jan uiteindelijk?" data-en="What did Jan eventually do?"></h2>
     </div>
     <div class="scenario">
-      <div class="name">Zes maanden later — Transportbedrijf Van der Berg</div>
-      <p>Jan sloot zich aan bij een regionaal platform voor transporteurs in Brabant. Elke ochtend geeft hij via een eenvoudige app door welke routes hij die dag rijdt en hoeveel ruimte hij over heeft.</p>
-      <p style="margin-top:8px;">Sindsdien vult hij gemiddeld 2 extra ritten per week bij — ritten die hij anders leeg had gereden. Zijn tarieven en klantgegevens heeft niemand ingezien.</p>
+      <div class="name" data-nl="Zes maanden later — Transportbedrijf Van der Berg" data-en="Six months later — Transport company Van der Berg"></div>
+      <p data-nl="Jan sloot zich aan bij een regionaal platform voor transporteurs in Brabant. Elke ochtend geeft hij via een eenvoudige app door welke routes hij die dag rijdt en hoeveel ruimte hij over heeft." data-en="Jan joined a regional platform for transporters in Brabant. Every morning he uses a simple app to share which routes he is driving that day and how much space he has available."></p>
+      <p style="margin-top:8px;" data-nl="Sindsdien vult hij gemiddeld 2 extra ritten per week bij — ritten die hij anders leeg had gereden. Zijn tarieven en klantgegevens heeft niemand ingezien." data-en="Since then he fills on average 2 extra trips per week — trips he would otherwise have driven empty. Nobody has seen his rates or customer data."></p>
     </div>
     <div class="stats">
-      <div class="stat"><div class="num">+2</div><div class="lbl">extra ritten per week</div></div>
-      <div class="stat"><div class="num">€14K</div><div class="lbl">extra omzet per jaar</div></div>
+      <div class="stat"><div class="num">+2</div><div class="lbl" data-nl="extra ritten per week" data-en="extra trips per week"></div></div>
+      <div class="stat"><div class="num">€14K</div><div class="lbl" data-nl="extra omzet per jaar" data-en="extra revenue per year"></div></div>
     </div>
     <div class="highlight">
-      <p><strong>De eerste stap was het moeilijkst.</strong> Niet technisch — maar mentaal. Zodra Jan begreep wat hij wel en niet deelde, verdween de twijfel.</p>
+      <p><strong data-nl="De eerste stap was het moeilijkst." data-en="The first step was the hardest."></strong> <span data-nl="Niet technisch — maar mentaal. Zodra Jan begreep wat hij wel en niet deelde, verdween de twijfel." data-en="Not technically — but mentally. Once Jan understood what he was and wasn't sharing, the doubt disappeared."></span></p>
     </div>
   </div>
   <div class="nav">
-    <button class="btn secondary" onclick="goTo('s-m3-q')">Terug</button>
-    <button class="btn" onclick="goTo('s-m4-2')">Verder</button>
+    <button class="btn secondary" onclick="goTo('s-m3-q')" data-nl="Terug" data-en="Back"></button>
+    <button class="btn" onclick="goTo('s-m4-2')" data-nl="Verder" data-en="Next"></button>
   </div>
 </div>
 
 <div class="screen" id="s-m4-2">
-  <div class="progress-bar"><div class="progress-fill" style="width:80%"></div></div>
+  <div class="progress-wrap">
+    <div class="progress-bar"><div class="progress-fill" style="width:80%"></div></div>
+    <div class="progress-label"><span data-nl="Module 4 van 5" data-en="Module 4 of 5"></span><span class="mod-name" data-nl="Jouw eerste stap" data-en="Your first step"></span></div>
+  </div>
   <div class="header">
-    <div><div class="module-label">MODULE 4 VAN 5</div><div class="module-title">Jouw eerste stap</div></div>
+    <div><div class="module-label" data-nl="MODULE 4 VAN 5" data-en="MODULE 4 OF 5"></div><div class="module-title" data-nl="Jouw eerste stap" data-en="Your first step"></div></div>
     <div class="timer">~3 min</div>
   </div>
   <div class="content">
     <div class="card green">
-      <div class="card-label">Actie</div>
-      <h2>Wat kun jij morgen doen?</h2>
-      <p>Je hoeft niet meteen een platform te kiezen of een IT-systeem aan te schaffen. Begin klein.</p>
+      <div class="card-label" data-nl="Actie" data-en="Action"></div>
+      <h2 data-nl="Wat kun jij morgen doen?" data-en="What can you do tomorrow?"></h2>
+      <p data-nl="Je hoeft niet meteen een platform te kiezen of een IT-systeem aan te schaffen. Begin klein." data-en="You don't need to choose a platform or buy an IT system right away. Start small."></p>
     </div>
-    <ul class="step-list">
-      <li><div class="step-num">1</div><p><strong>Inventariseer:</strong> Hoeveel ritten per week rijd jij met lege ruimte? Maak het concreet voor jezelf.</p></li>
-      <li><div class="step-num">2</div><p><strong>Oriënteer:</strong> Zoek op wat TLN of evofenedex aanbiedt op het gebied van datadeling voor transporteurs.</p></li>
-      <li><div class="step-num">3</div><p><strong>Vraag:</strong> Spreek eens met een collega-ondernemer in jouw regio. Misschien heeft die al ervaringen.</p></li>
-      <li><div class="step-num">4</div><p><strong>Pilot:</strong> Veel platforms bieden een gratis proefperiode. Probeer het zonder verplichtingen.</p></li>
-    </ul>
+    <ul class="step-list" id="steps-m4"></ul>
     <div class="card yellow">
-      <div class="card-label">Jouw reflectie</div>
-      <p>Welke stap lijkt voor jou het meest haalbaar?</p>
-      <textarea class="reflection-input" placeholder="Typ hier je gedachten..." id="reflection-m4"></textarea>
+      <div class="card-label" data-nl="Jouw reflectie" data-en="Your reflection"></div>
+      <p data-nl="Welke stap lijkt voor jou het meest haalbaar?" data-en="Which step seems most achievable for you?"></p>
+      <textarea class="reflection-input" id="reflection-m4"></textarea>
     </div>
   </div>
   <div class="nav">
-    <button class="btn secondary" onclick="goTo('s-m4-1')">Terug</button>
-    <button class="btn" onclick="goTo('s-m5-1')">Verder</button>
+    <button class="btn secondary" onclick="goTo('s-m4-1')" data-nl="Terug" data-en="Back"></button>
+    <button class="btn" onclick="goTo('s-m5-1')" data-nl="Verder" data-en="Next"></button>
   </div>
 </div>
 
-<!-- MODULE 5: ZELFTEST -->
+<!-- MODULE 5 -->
 <div class="screen" id="s-m5-1">
-  <div class="progress-bar"><div class="progress-fill" style="width:86%"></div></div>
+  <div class="progress-wrap">
+    <div class="progress-bar"><div class="progress-fill" style="width:86%"></div></div>
+    <div class="progress-label"><span data-nl="Module 5 van 5" data-en="Module 5 of 5"></span><span class="mod-name" data-nl="Zelftest" data-en="Self-test"></span></div>
+  </div>
   <div class="header">
-    <div><div class="module-label">MODULE 5 VAN 5</div><div class="module-title">Zelftest</div></div>
+    <div><div class="module-label" data-nl="MODULE 5 VAN 5" data-en="MODULE 5 OF 5"></div><div class="module-title" data-nl="Zelftest" data-en="Self-test"></div></div>
     <div class="timer">~2 min</div>
   </div>
   <div class="content">
     <div class="card blue">
-      <div class="card-label">Vraag 1 van 3</div>
-      <h2>Wat is het grootste voordeel van federatieve datadeling voor een transporteur?</h2>
+      <div class="card-label" data-nl="Vraag 1 van 3" data-en="Question 1 of 3"></div>
+      <h2 data-nl="Wat is het grootste voordeel van federatieve datadeling voor een transporteur?" data-en="What is the biggest benefit of federated data sharing for a transporter?"></h2>
     </div>
-    <div class="choices">
-      <button class="choice-btn" onclick="checkAnswer(this, false, 'm5a', 'Niet helemaal — je tarieven blijven juist verborgen. Het grote voordeel is dat je lege ruimte kunt vullen zonder gevoelige info te delen.')">Je tarieven worden automatisch vergeleken met concurrenten</button>
-      <button class="choice-btn" onclick="checkAnswer(this, true, 'm5a', 'Precies! Je kunt lege ritten verminderen door slim informatie te delen — zonder je concurrentiepositie te riskeren.')">Je kunt lege ritten verminderen zonder gevoelige data te delen</button>
-      <button class="choice-btn" onclick="checkAnswer(this, false, 'm5a', 'Datadeling vervangt geen klantcontact. Het helpt je juist om efficiënter te werken naast je bestaande klantrelaties.')">Je hoeft geen klantcontact meer te onderhouden</button>
-    </div>
+    <div class="choices" id="choices-m5a"></div>
     <div class="feedback" id="fb-m5a"></div>
   </div>
   <div class="nav">
-    <button class="btn secondary" onclick="goTo('s-m4-2')">Terug</button>
-    <button class="btn" id="btn-m5a-next" disabled onclick="goTo('s-m5-2')">Volgende vraag</button>
+    <button class="btn secondary" onclick="goTo('s-m4-2')" data-nl="Terug" data-en="Back"></button>
+    <button class="btn" id="btn-m5a-next" disabled onclick="goTo('s-m5-2')" data-nl="Volgende vraag" data-en="Next question"></button>
   </div>
 </div>
 
 <div class="screen" id="s-m5-2">
-  <div class="progress-bar"><div class="progress-fill" style="width:92%"></div></div>
+  <div class="progress-wrap">
+    <div class="progress-bar"><div class="progress-fill" style="width:92%"></div></div>
+    <div class="progress-label"><span data-nl="Module 5 van 5" data-en="Module 5 of 5"></span><span class="mod-name" data-nl="Zelftest" data-en="Self-test"></span></div>
+  </div>
   <div class="header">
-    <div><div class="module-label">MODULE 5 VAN 5</div><div class="module-title">Zelftest</div></div>
+    <div><div class="module-label" data-nl="MODULE 5 VAN 5" data-en="MODULE 5 OF 5"></div><div class="module-title" data-nl="Zelftest" data-en="Self-test"></div></div>
   </div>
   <div class="content">
     <div class="card blue">
-      <div class="card-label">Vraag 2 van 3</div>
-      <h2>Welke informatie deel je bij federatieve datadeling?</h2>
+      <div class="card-label" data-nl="Vraag 2 van 3" data-en="Question 2 of 3"></div>
+      <h2 data-nl="Welke informatie deel je bij federatieve datadeling?" data-en="What information do you share in federated data sharing?"></h2>
     </div>
-    <div class="choices">
-      <button class="choice-btn" onclick="checkAnswer(this, false, 'm5b', 'Klantgegevens deel je juist niet. Alleen een anoniem signaal over beschikbare ruimte.')">Je volledige klantenlijst en tarieven</button>
-      <button class="choice-btn" onclick="checkAnswer(this, true, 'm5b', 'Correct! Alleen een anoniem signaal — beschikbare ruimte op een route. Meer heeft het systeem niet nodig.')">Alleen een anoniem signaal: beschikbare ruimte op een route</button>
-      <button class="choice-btn" onclick="checkAnswer(this, false, 'm5b', 'Je financiële gegevens blijven volledig verborgen. Datadeling gaat over logistieke beschikbaarheid, niet over geld.')">Je winst- en verliesrekening</button>
-    </div>
+    <div class="choices" id="choices-m5b"></div>
     <div class="feedback" id="fb-m5b"></div>
   </div>
   <div class="nav">
-    <button class="btn secondary" onclick="goTo('s-m5-1')">Terug</button>
-    <button class="btn" id="btn-m5b-next" disabled onclick="goTo('s-m5-3')">Volgende vraag</button>
+    <button class="btn secondary" onclick="goTo('s-m5-1')" data-nl="Terug" data-en="Back"></button>
+    <button class="btn" id="btn-m5b-next" disabled onclick="goTo('s-m5-3')" data-nl="Volgende vraag" data-en="Next question"></button>
   </div>
 </div>
 
 <div class="screen" id="s-m5-3">
-  <div class="progress-bar"><div class="progress-fill" style="width:96%"></div></div>
+  <div class="progress-wrap">
+    <div class="progress-bar"><div class="progress-fill" style="width:96%"></div></div>
+    <div class="progress-label"><span data-nl="Module 5 van 5" data-en="Module 5 of 5"></span><span class="mod-name" data-nl="Zelftest" data-en="Self-test"></span></div>
+  </div>
   <div class="header">
-    <div><div class="module-label">MODULE 5 VAN 5</div><div class="module-title">Zelftest</div></div>
+    <div><div class="module-label" data-nl="MODULE 5 VAN 5" data-en="MODULE 5 OF 5"></div><div class="module-title" data-nl="Zelftest" data-en="Self-test"></div></div>
   </div>
   <div class="content">
     <div class="card blue">
-      <div class="card-label">Vraag 3 van 3</div>
-      <h2>Wat is de eerste stap als je wilt beginnen met datadeling?</h2>
+      <div class="card-label" data-nl="Vraag 3 van 3" data-en="Question 3 of 3"></div>
+      <h2 data-nl="Wat is de eerste stap als je wilt beginnen met datadeling?" data-en="What is the first step if you want to start with data sharing?"></h2>
     </div>
-    <div class="choices">
-      <button class="choice-btn" onclick="checkAnswer(this, false, 'm5c', 'Een duur IT-systeem is niet nodig om te beginnen. De eerste stap is juist laagdrempelig: inventariseer je situatie en oriënteer je.')">Direct een duur IT-systeem aanschaffen</button>
-      <button class="choice-btn" onclick="checkAnswer(this, false, 'm5c', 'Wachten is niet nodig — je kunt vandaag al beginnen met oriënteren via TLN of evofenedex.')">Wachten tot de overheid het verplicht stelt</button>
-      <button class="choice-btn" onclick="checkAnswer(this, true, 'm5c', 'Precies! Begin klein: inventariseer hoeveel lege ritten je rijdt en oriënteer je op wat er beschikbaar is. Geen verplichtingen, geen grote investeringen.')">Inventariseer je lege ritten en oriënteer je op beschikbare platforms</button>
-    </div>
+    <div class="choices" id="choices-m5c"></div>
     <div class="feedback" id="fb-m5c"></div>
   </div>
   <div class="nav">
-    <button class="btn secondary" onclick="goTo('s-m5-2')">Terug</button>
-    <button class="btn" id="btn-m5c-next" disabled onclick="showFinal()">Bekijk resultaat</button>
+    <button class="btn secondary" onclick="goTo('s-m5-2')" data-nl="Terug" data-en="Back"></button>
+    <button class="btn" id="btn-m5c-next" disabled onclick="showFinal()" data-nl="Bekijk resultaat" data-en="See result"></button>
   </div>
 </div>
 
-<!-- FINAL SCREEN -->
+<!-- FINAL -->
 <div class="screen" id="s-final">
   <div class="progress-bar"><div class="progress-fill" style="width:100%"></div></div>
   <div class="final-hero">
-    <h1>Gefeliciteerd — je hebt de e-learning afgerond!</h1>
-    <p>Je weet nu wat federatieve datadeling is en wat jij ermee kunt.</p>
+    <h1 data-nl="Gefeliciteerd — je hebt de e-learning afgerond!" data-en="Congratulations — you have completed the e-learning!"></h1>
+    <p data-nl="Je weet nu wat federatieve datadeling is en wat jij ermee kunt." data-en="You now know what federated data sharing is and what you can do with it."></p>
     <div class="score-circle">
       <div class="num" id="final-score">0/3</div>
-      <div class="lbl">correct</div>
+      <div class="lbl" data-nl="correct" data-en="correct"></div>
     </div>
   </div>
   <div class="content">
     <div class="card green">
-      <div class="card-label">Wat je hebt geleerd</div>
-      <ul style="font-size:14px; color:#444; line-height:2; padding-left:18px;">
-        <li>Lege ritten kosten geld — en zijn grotendeels te vermijden</li>
-        <li>Federatieve datadeling betekent: slim signalen delen, geen gevoelige data</li>
-        <li>Angst voor misbruik is begrijpelijk maar grotendeels onterecht</li>
-        <li>De eerste stap is laagdrempelig — begin met oriënteren</li>
-      </ul>
+      <div class="card-label" data-nl="Wat je hebt geleerd" data-en="What you have learned"></div>
+      <ul style="font-size:14px; color:#444; line-height:2; padding-left:18px;" id="final-list"></ul>
     </div>
     <div class="card blue">
-      <div class="card-label">Jouw volgende stap</div>
-      <p>Neem contact op met <strong>TLN</strong> of <strong>evofenedex</strong> voor meer informatie over datadeling voor transporteurs in jouw regio. Of spreek een collega-ondernemer aan die al ervaring heeft.</p>
-    </div>
-    <div class="card yellow">
-      <div class="card-label">Meer weten?</div>
-      <p>Bekijk de informatie van de <strong>Open Logistics Foundation</strong> over de EU Data Act en wat die betekent voor jouw bedrijf.</p>
+      <div class="card-label" data-nl="Jouw volgende stap" data-en="Your next step"></div>
+      <p data-nl="Neem contact op met <strong>TLN</strong> of <strong>evofenedex</strong> voor meer informatie over datadeling voor transporteurs in jouw regio." data-en="Contact <strong>TLN</strong> or <strong>evofenedex</strong> for more information about data sharing for transporters in your region."></p>
     </div>
     <div class="card orange">
-      <div class="card-label">Eerlijk gezegd...</div>
-      <h2 style="font-size:15px; margin-bottom:8px;">De technologie is er nog niet helemaal</h2>
-      <p>Veel van de platforms die federatieve datadeling mogelijk moeten maken, zijn nog volop in ontwikkeling. Het ideaal — waarbij alle partijen in de logistieke keten naadloos en veilig informatie uitwisselen — is nog geen realiteit.</p>
-      <p>Maar dat betekent niet dat jij achterover kunt leunen. Juist nu is het moment om:</p>
-      <ul style="font-size:14px; color:#444; line-height:2; padding-left:18px; margin-top:6px;">
-        <li>Je te verdiepen in wat er al beschikbaar is</li>
-        <li>Het gesprek aan te gaan met collega-ondernemers in jouw regio</li>
-        <li>Als vroege gebruiker mee te denken over hoe platforms zich moeten ontwikkelen</li>
-      </ul>
-      <p style="margin-top:10px;">De bedrijven die straks het meest profiteren van datadeling zijn degenen die <strong>nu</strong> al begrijpen waar het over gaat — en het bespreekbaar maken in hun netwerk.</p>
+      <div class="card-label" data-nl="Eerlijk gezegd..." data-en="To be honest..."></div>
+      <h2 style="font-size:15px; margin-bottom:8px;" data-nl="De technologie is er nog niet helemaal" data-en="The technology isn't quite there yet"></h2>
+      <p data-nl="Veel van de platforms die federatieve datadeling mogelijk moeten maken, zijn nog volop in ontwikkeling. Het ideaal is nog geen realiteit." data-en="Many of the platforms that should enable federated data sharing are still under development. The ideal is not yet a reality."></p>
+      <p data-nl="Maar dat betekent niet dat jij achterover kunt leunen. Juist nu is het moment om je te verdiepen, het gesprek aan te gaan met collega-ondernemers en als vroege gebruiker mee te denken over hoe platforms zich moeten ontwikkelen." data-en="But that doesn't mean you can sit back. Now is exactly the time to learn more, start conversations with fellow entrepreneurs, and as an early adopter help shape how these platforms develop."></p>
+      <p data-nl="De bedrijven die straks het meest profiteren zijn degenen die <strong>nu</strong> al begrijpen waar het over gaat — en het bespreekbaar maken in hun netwerk." data-en="The companies that will benefit most are those who <strong>now</strong> already understand what it is about — and make it a topic of conversation in their network."></p>
     </div>
   </div>
   <div class="nav">
-    <button class="btn secondary" onclick="goTo('s-intro'); resetScore()">Opnieuw beginnen</button>
+    <button class="btn secondary" onclick="goTo('s-lang'); resetAll()" data-nl="Opnieuw beginnen" data-en="Start again"></button>
   </div>
 </div>
 
 <script>
-  let score = 0;
-  const answered = {};
+let lang = 'nl';
+let score = 0;
+const answered = {};
 
-  function goTo(id) {
-    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-    document.getElementById(id).classList.add('active');
-    window.scrollTo(0,0);
+const t = {
+  nl: {
+    introList: ['Wat datadeling concreet betekent voor jouw bedrijf','Waarom het veiliger is dan je denkt','Welke eerste stap jij morgen kunt zetten'],
+    finalList: ['Lege ritten kosten geld — en zijn grotendeels te vermijden','Federatieve datadeling betekent: slim signalen delen, geen gevoelige data','Angst voor misbruik is begrijpelijk maar grotendeels onterecht','De eerste stap is laagdrempelig — begin met oriënteren'],
+    stepsM2: ['Jan geeft aan zijn systeem door: "Ik heb morgen 40% ruimte vrij op de route Tilburg–Rotterdam."','Het systeem matcht dit anoniem met andere bedrijven die lading zoeken op dezelfde route.','Jan krijgt een melding: "Er is mogelijk een match — wil je meer weten?" Dan pas wordt contact gelegd.','Jan beslist zelf of hij de samenwerking aangaat. Zijn tarieven en klantgegevens blijven verborgen.'],
+    stepsM4: ['<strong>Inventariseer:</strong> Hoeveel ritten per week rijd jij met lege ruimte? Maak het concreet.','<strong>Oriënteer:</strong> Zoek op wat TLN of evofenedex aanbiedt op het gebied van datadeling.','<strong>Vraag:</strong> Spreek eens met een collega-ondernemer in jouw regio.','<strong>Pilot:</strong> Veel platforms bieden een gratis proefperiode. Probeer het zonder verplichtingen.'],
+    reflectionPlaceholder: 'Typ hier je gedachten...',
+    calcLabel: 'Geschat verlies per jaar',
+    choicesM1: ['Ja, dit herken ik goed — het gebeurt regelmatig','Soms, maar ik los het op via mijn netwerk','Niet echt — wij rijden altijd vol'],
+    fbM1: 'Geen enkel antwoord is fout hier. In de volgende modules leer je hoe datadeling precies dit probleem aanpakt.',
+    choicesM2: [['Je tarieven, klantgegevens en volledige planning', false, 'Je tarieven en klantgegevens zijn juist wat je NIET deelt.'],['Alleen een anoniem signaal: beschikbare ruimte op een route en datum', true, 'Precies! Alleen een signaal. Jouw gevoelige bedrijfsinformatie blijft verborgen.'],['Een financiële vergoeding aan andere partijen', false, 'Je financiële gegevens blijven volledig verborgen.']],
+    choicesM3: [['Eens — concurrenten kunnen mijn tarieven zien', false, 'Dit is een veelgehoorde angst, maar bij federatieve datadeling is dit niet het geval.'],['Oneens — ik bepaal zelf wat ik deel', true, 'Correct! Tarieven en klantgegevens blijven volledig verborgen. Jij bepaalt wat zichtbaar is.']],
+    choicesM5a: [['Je tarieven worden automatisch vergeleken met concurrenten', false, 'Je tarieven blijven juist verborgen.'],['Je kunt lege ritten verminderen zonder gevoelige data te delen', true, 'Precies! Je kunt lege ritten verminderen door slim informatie te delen.'],['Je hoeft geen klantcontact meer te onderhouden', false, 'Datadeling vervangt geen klantcontact.']],
+    choicesM5b: [['Je volledige klantenlijst en tarieven', false, 'Klantgegevens deel je juist niet.'],['Alleen een anoniem signaal: beschikbare ruimte op een route', true, 'Correct! Alleen een anoniem signaal.'],['Je winst- en verliesrekening', false, 'Je financiële gegevens blijven volledig verborgen.']],
+    choicesM5c: [['Direct een duur IT-systeem aanschaffen', false, 'Een duur IT-systeem is niet nodig om te beginnen.'],['Wachten tot de overheid het verplicht stelt', false, 'Je kunt vandaag al beginnen met oriënteren.'],['Inventariseer je lege ritten en oriënteer je op beschikbare platforms', true, 'Precies! Begin klein: inventariseer en oriënteer je.']],
+  },
+  en: {
+    introList: ['What data sharing concretely means for your business','Why it is safer than you think','What first step you can take tomorrow'],
+    finalList: ['Empty trips cost money — and are largely avoidable','Federated data sharing means: sharing smart signals, not sensitive data','Fear of misuse is understandable but largely unfounded','The first step is accessible — start by exploring'],
+    stepsM2: ['Jan tells his system: "I have 40% spare space tomorrow on the Tilburg–Rotterdam route."','The system anonymously matches this with other companies looking for cargo on the same route.','Jan receives a notification: "There may be a match — do you want to know more?" Only then is contact made.','Jan decides himself whether to proceed. His rates and customer data remain hidden.'],
+    stepsM4: ['<strong>Assess:</strong> How many trips per week do you drive with empty space? Make it concrete.','<strong>Explore:</strong> Look at what TLN or evofenedex offers in terms of data sharing.','<strong>Ask:</strong> Talk to a fellow entrepreneur in your region.','<strong>Pilot:</strong> Many platforms offer a free trial. Try it with no obligations.'],
+    reflectionPlaceholder: 'Type your thoughts here...',
+    calcLabel: 'Estimated loss per year',
+    choicesM1: ['Yes, I recognise this — it happens regularly','Sometimes, but I solve it through my network','Not really — we always drive full'],
+    fbM1: 'No answer is wrong here. In the next modules you will learn how data sharing addresses exactly this problem.',
+    choicesM2: [['Your rates, customer data and full schedule', false, 'Your rates and customer data are precisely what you do NOT share.'],['Only an anonymous signal: available space on a route and date', true, 'Exactly! Only a signal. Your sensitive business information stays hidden.'],['A financial payment to other parties', false, 'Your financial data stays completely hidden.']],
+    choicesM3: [['Agree — competitors can see my rates', false, 'This is a common fear, but with federated data sharing this is not the case.'],['Disagree — I decide what I share', true, 'Correct! Rates and customer data stay completely hidden. You decide what is visible.']],
+    choicesM5a: [['Your rates are automatically compared with competitors', false, 'Your rates stay hidden.'],['You can reduce empty trips without sharing sensitive data', true, 'Exactly! You can reduce empty trips by sharing smart signals.'],['You no longer need to maintain customer contact', false, 'Data sharing does not replace customer contact.']],
+    choicesM5b: [['Your full customer list and rates', false, 'Customer data is precisely what you do not share.'],['Only an anonymous signal: available space on a route', true, 'Correct! Only an anonymous signal.'],['Your profit and loss account', false, 'Your financial data stays completely hidden.']],
+    choicesM5c: [['Buy an expensive IT system immediately', false, 'An expensive IT system is not needed to get started.'],['Wait until the government makes it mandatory', false, 'You can start exploring today.'],['Assess your empty trips and explore available platforms', true, 'Exactly! Start small: assess and explore.']],
   }
+};
 
-  function selectChoice(btn, val, module) {
-    if (answered[module]) return;
-    answered[module] = true;
-    btn.classList.add('neutral');
-    const fb = document.getElementById('fb-' + module);
-    fb.classList.add('show', 'info');
-    const nextBtn = document.getElementById('btn-' + module + '-next');
-    if (nextBtn) nextBtn.disabled = false;
-  }
+function setLang(l) {
+  lang = l;
+  document.documentElement.lang = l;
+  applyLang();
+  goTo('s-intro');
+}
 
-  function checkAnswer(btn, correct, module, msg) {
-    if (answered[module]) return;
-    answered[module] = true;
-    const btns = btn.parentElement.querySelectorAll('.choice-btn');
-    btns.forEach(b => b.style.pointerEvents = 'none');
-    btn.classList.add(correct ? 'correct' : 'wrong');
-    const fb = document.getElementById('fb-' + module);
-    fb.textContent = msg;
-    fb.classList.add('show', correct ? 'good' : 'bad');
-    if (correct && ['m5a','m5b','m5c'].includes(module)) score++;
-    const nextBtn = document.getElementById('btn-' + module + '-next');
-    if (nextBtn) nextBtn.disabled = false;
-  }
+function applyLang() {
+  document.querySelectorAll('[data-nl]').forEach(el => {
+    const txt = el.getAttribute('data-' + lang);
+    if (txt) el.innerHTML = txt;
+  });
+  const d = t[lang];
+  // intro list
+  const il = document.getElementById('intro-list');
+  if (il) il.innerHTML = d.introList.map(i => `<li>${i}</li>`).join('');
+  // final list
+  const fl = document.getElementById('final-list');
+  if (fl) fl.innerHTML = d.finalList.map(i => `<li>${i}</li>`).join('');
+  // steps m2
+  const sm2 = document.getElementById('steps-m2');
+  if (sm2) sm2.innerHTML = d.stepsM2.map((s,i) => `<li><div class="step-num">${i+1}</div><p>${s}</p></li>`).join('');
+  // steps m4
+  const sm4 = document.getElementById('steps-m4');
+  if (sm4) sm4.innerHTML = d.stepsM4.map((s,i) => `<li><div class="step-num">${i+1}</div><p>${s}</p></li>`).join('');
+  // reflection placeholder
+  const ref = document.getElementById('reflection-m4');
+  if (ref) ref.placeholder = d.reflectionPlaceholder;
+  // choices
+  buildChoicesM1(); buildChoicesM2(); buildChoicesM3();
+  buildChoicesM5('m5a'); buildChoicesM5('m5b'); buildChoicesM5('m5c');
+}
 
-  function showFinal() {
-    document.getElementById('final-score').textContent = score + '/3';
-    goTo('s-final');
-  }
+function buildChoicesM1() {
+  const el = document.getElementById('choices-m1');
+  if (!el) return;
+  el.innerHTML = t[lang].choicesM1.map(c =>
+    `<button class="choice-btn" onclick="selectChoice(this,'m1')">${c}</button>`
+  ).join('');
+}
+function buildChoicesM2() {
+  const el = document.getElementById('choices-m2');
+  if (!el) return;
+  el.innerHTML = t[lang].choicesM2.map(([txt, correct, msg]) =>
+    `<button class="choice-btn" onclick="checkAnswer(this,${correct},'m2','${msg.replace(/'/g,"&#39;")}')">${txt}</button>`
+  ).join('');
+}
+function buildChoicesM3() {
+  const el = document.getElementById('choices-m3');
+  if (!el) return;
+  el.innerHTML = t[lang].choicesM3.map(([txt, correct, msg]) =>
+    `<button class="choice-btn" onclick="checkAnswer(this,${correct},'m3','${msg.replace(/'/g,"&#39;")}')">${txt}</button>`
+  ).join('');
+}
+function buildChoicesM5(mod) {
+  const el = document.getElementById('choices-' + mod);
+  if (!el) return;
+  el.innerHTML = t[lang]['choices' + mod.charAt(0).toUpperCase() + mod.slice(1)].map(([txt, correct, msg]) =>
+    `<button class="choice-btn" onclick="checkAnswer(this,${correct},'${mod}','${msg.replace(/'/g,"&#39;")}')">${txt}</button>`
+  ).join('');
+}
 
-  function resetScore() {
-    score = 0;
-    Object.keys(answered).forEach(k => delete answered[k]);
-    document.querySelectorAll('.choice-btn').forEach(b => {
-      b.classList.remove('correct','wrong','neutral');
-      b.style.pointerEvents = '';
-    });
-    document.querySelectorAll('.feedback').forEach(f => {
-      f.classList.remove('show','good','bad','info');
-      f.textContent = '';
-    });
-    document.querySelectorAll('.btn[id]').forEach(b => {
-      if (b.id.includes('next')) b.disabled = true;
-    });
-    document.getElementById('fb-m1').textContent = '';
-  }
+function updateCalc() {
+  const ritten = parseFloat(document.getElementById('calc-ritten').value) || 0;
+  const km = parseFloat(document.getElementById('calc-km').value) || 0;
+  const kosten = parseFloat(document.getElementById('calc-kosten').value) || 0;
+  const result = ritten * km * kosten * 52;
+  document.getElementById('calc-output').textContent = '€' + Math.round(result).toLocaleString('nl-NL');
+}
+
+function goTo(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0,0);
+}
+
+function selectChoice(btn, module) {
+  if (answered[module]) return;
+  answered[module] = true;
+  btn.classList.add('neutral');
+  const fb = document.getElementById('fb-' + module);
+  fb.textContent = t[lang].fbM1;
+  fb.classList.add('show','info');
+  const nb = document.getElementById('btn-' + module + '-next');
+  if (nb) nb.disabled = false;
+}
+
+function checkAnswer(btn, correct, module, msg) {
+  if (answered[module]) return;
+  answered[module] = true;
+  btn.parentElement.querySelectorAll('.choice-btn').forEach(b => b.style.pointerEvents = 'none');
+  btn.classList.add(correct ? 'correct' : 'wrong');
+  const fb = document.getElementById('fb-' + module);
+  fb.textContent = msg;
+  fb.classList.add('show', correct ? 'good' : 'bad');
+  if (correct && ['m5a','m5b','m5c'].includes(module)) score++;
+  const nb = document.getElementById('btn-' + module + '-next');
+  if (nb) nb.disabled = false;
+}
+
+function showFinal() {
+  document.getElementById('final-score').textContent = score + '/3';
+  goTo('s-final');
+}
+
+function resetAll() {
+  score = 0;
+  Object.keys(answered).forEach(k => delete answered[k]);
+  document.querySelectorAll('.choice-btn').forEach(b => { b.classList.remove('correct','wrong','neutral'); b.style.pointerEvents = ''; });
+  document.querySelectorAll('.feedback').forEach(f => { f.classList.remove('show','good','bad','info'); f.textContent = ''; });
+  document.querySelectorAll('.btn[id*="next"]').forEach(b => b.disabled = true);
+}
+
+window.addEventListener('load', () => { updateCalc(); });
 </script>
 </body>
 </html>
